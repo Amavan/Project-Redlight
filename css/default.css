@@ -95,7 +95,8 @@ body p a {
 }
 
 .red-light-nav a.selected {
-  color: #000;
+  color: #333;
+  font-weight: 700;
 }
 
 /* Logo */

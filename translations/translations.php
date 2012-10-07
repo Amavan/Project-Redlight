@@ -23,10 +23,15 @@ function setupLang() {
 
 }
 
+function echoTranslation($id) {
+  global $string;
+  echo $string[$id];
+}
+
+
 function getTranslation($id) {
   global $string;
-
-  echo $string[$id];
+  return $string[$id];
 }
 
 

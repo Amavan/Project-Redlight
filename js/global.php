@@ -1,0 +1,5 @@
+<?
+
+require('symptom-finder.js');
+
+?>
