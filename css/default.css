@@ -1,0 +1,450 @@
+/* Eric Meyer CSS Reset v2 */
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+
+body {
+	line-height: 1;
+	font-family: arial;
+	font-size: 12px;
+}
+
+ol, ul {
+	list-style: none;
+}
+
+blockquote, q {
+	quotes: none;
+}
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+body p a {
+  color: #333;
+  text-decoration: none;
+  border-bottom: 1px solid #666;
+}
+
+/* Basic site */
+
+.red-light-nav {
+  border-bottom: 2px solid #ddd;
+  background: #f1f1f1;
+  padding: 12px 50px 8px 243px;
+}
+
+.red-light-nav > div {
+  display: inline-block;
+  position: relative;
+  top: 0;
+}
+
+.red-light-nav > div a {
+  font-family: 'Arvo', sans-serif;
+  color: #666;
+  text-decoration: none;
+  display: block;
+  position: relative;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  padding: 10px 20px 10px;
+  font-size: 16px;
+}
+
+.red-light-nav div.right {
+  float: right;
+}
+
+.red-light-nav > div:hover a span {
+  border-bottom: 1px solid #aaa;
+  color: #000;
+}
+
+.red-light-nav a.selected {
+  color: #000;
+}
+
+/* Logo */
+
+.red-light-nav .logo {
+  font-size: 20px;
+  font-family: 'Open Sans', sans-serif;
+  text-transform: uppercase;
+  font-weight: 600;
+  position: absolute;
+  padding: 7px;
+  text-align: center;
+  color: #333;
+  background: #fff;
+  border: 2px solid #ddd;
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.25em;
+  margin: 0 30px 0 0;
+  width: 145px;
+  top: 20px;
+  left: 50px;
+}
+
+.red-light-nav .logo span {
+  display: block;
+}
+
+.red-light-nav .logo span:nth-child(1),
+.red-light-nav .logo span:nth-child(2),
+.red-light-nav .logo span:nth-child(3) {
+  font-size: 1.25em;
+  line-height: 1.25em;
+}
+
+.red-light-nav .logo span:nth-child(1) {
+  color: #ec1827;
+}
+
+.red-light-nav .logo span:nth-child(2) {
+  letter-spacing: 0.05em;
+}
+
+.red-light-nav .logo span:nth-child(3) {
+  letter-spacing: 0.15em;
+}
+
+/* Nav */
+#rl-browse-btn {
+  position: relative;
+}
+
+#rl-browse-btn:hover ul {
+  display: block;
+}
+
+#rl-browse-btn ul {
+  z-index: 999;
+  text-align: left;
+  position: absolute;
+  left: 0;
+  width: 300px;
+  display: none;
+  border: 1px solid #ddd;
+}
+
+.red-light-nav li {
+  display: block;
+  font-family: 'Arvo', serif;
+  background: #fff;
+  font-size: 14px;
+  padding: 7px 10px;
+  box-shadow: 0 3px 3px rgba(0,0,0,.2);
+}
+
+.red-light-nav li:nth-child(even) {
+  background: #f8f8f8;
+}
+
+.red-light-nav li span {
+  padding-right: 10px;
+  font-size: 10px;
+  text-transform: uppercase;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: bold;
+  color: #666;
+}
+
+.red-light-sidebar {
+  clear: left;
+  float: left;
+  width: 163px;
+  margin: 150px 0 20px 50px;
+}
+
+h1 {
+  font-family: 'Arvo', serif;
+  font-size: 16px;
+  padding: 0 0 15px 0;
+  margin: 0 0 15px 0;
+  border-bottom: 2px dotted #ddd;
+  color: #666;
+  line-height: 1.5em;
+}
+
+.red-light-sidebar p {
+  line-height: 1.5em;
+  font-style: italic;
+  color: #888;
+}
+
+.red-light-page {
+  margin: 50px 50px 50px 263px;
+}
+
+/* Toggle */
+
+.toggle-container {
+  position: relative;
+  padding-left: 18px;
+}
+
+.toggle-container span {
+  position: absolute;
+  top: 17px;
+  left: 0;
+  display: block;
+  border-radius: 999px;
+  background: #666;
+  color: #fff;
+  height: 16px;
+  width: 16px;
+  text-align: center;
+  line-height: 16px;
+  font-weight: bold;
+}
+
+.toggle {
+  display: inline-block;
+  border: 1px solid #ccc;
+  background: #eee;
+  border-radius: 4px;
+  margin: 10px;
+  overflow: hidden;
+}
+
+.toggle li {
+  text-align: center;
+  display: inline-block;
+  border-left: 1px solid #ccc;
+  min-width: 72px;
+}
+
+.toggle.stacked li {
+  display: block;
+  border-left: none;
+  border-top: 1px solid #ccc;
+}
+
+.toggle li:first-child {
+  border-left: none;
+}
+
+.toggle.stacked li:first-child {
+  border-top: none;
+}
+
+.toggle a {
+  display: block;
+  padding: 10px 13px;
+  color: #555;
+  font-family: arial, sans-serif;
+  font-size: 12px;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.toggle a.selected {
+  background: rgba(0,0,0,.35);
+  color: #fff;
+}
+
+/* Symptom Finder */
+
+.symptom-finder {
+  position: relative;
+  border: 1px solid #ccc;
+  display: inline-block;
+  overflow: hidden;
+  width: 590px;
+  background: #fff 4px 0 url(../images/grid.png);
+}
+
+.symptom-finder .toggles {
+  float: left;
+  width: 249px;
+  height: 320px;
+  position: relative;
+  background: #f6f6f6;
+  padding: 20px;
+  border-right: 1px solid #ddd;
+  margin-right: -15px;
+}
+
+.symptom-finder-canvas {
+  position: relative;
+  margin-left: 290px;
+  height: 360px;
+  width: 300px;
+  position: relative;
+  margin-top: 0;
+  transition: height .5s;
+  -moz-transition: height .5s;
+  -webkit-transition: height .5s;
+  background: #fff url(../images/grid.png);
+    transition: margin-left .7s ease-in-out;
+  -moz-transition: margin-left .7s ease-in-out;
+  -webkit-transition: margin-left .7s ease-in-out;
+  z-index: 2;
+}
+
+.symptom-finder-canvas.start {
+  opacity: 0;
+}
+
+.symptom-finder .body {
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  position: absolute;
+
+}
+
+.symptom-finder-canvas.shift {
+  z-index: 2;
+  margin-left: 0;
+}
+
+.symptom-finder .body.male .female,
+.symptom-finder .body.female .male,
+.symptom-finder .body.child .adult,
+.symptom-finder .body.adult .child {
+  display: none;
+}
+
+.symptom-finder .adult img,
+.symptom-finder .child img {
+  position: absolute;
+}
+
+.symptom-finder .adult img {
+  height: 330px;
+  bottom: 0;
+  left: 50%;
+}
+
+.symptom-finder .child img {
+  height: 302px;
+  margin: 0 0 0 0;
+  bottom: 0;
+  left: 50%;
+}
+
+.symptom-finder .adult.male img {
+  margin: 0 0 0 -62px;
+}
+
+.symptom-finder .adult.female img {
+  margin: 0 0 0 -83px;
+}
+
+.symptom-finder .child.male img {
+  margin: 0 0 0 -53px;
+}
+
+.symptom-finder .child.female img {
+  margin: 0 0 0 -72px;
+}
+
+.symptom-finder .dot {
+  position: absolute;
+  top: 200px;
+  left: 142px;
+}
+
+.symptom-finder .dot a {
+  position: relative;
+  display: block;
+  height: 100%;
+  width: 100%;
+  background: red;
+  height: 8px;
+  width: 8px;
+  border-radius: 4px;
+  box-shadow: 0 0 0 2px #fff, 0 0 0 3px red;
+}
+
+.symptom-finder .dot a:hover {
+  box-shadow: 0 0 0 3px #fff, 0 0 0 4px red;
+}
+
+.symptom-finder .dot .label {
+  display: none;
+}
+
+.symptom-finder .dot a:hover .label {
+  display: block;
+  position: absolute;
+  top: -4px;
+  left: 20px;
+  background: #111;
+  color: #fff;
+  font-family: arial, sans-serif;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 2px 4px 2px 3px;
+}
+
+.symptom-finder .dot .label:after {
+  content: " ";
+  position: absolute;
+  left: -8px;
+  top: 0;
+  width: 0;
+  height: 0;
+  border-bottom: 8px solid transparent;
+  border-top: 8px solid transparent;
+  border-right: 8px solid #111;
+  z-index: 1;
+}
+
+.symptom-finder-results {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 290px;
+  height: 360px;
+  background: #999;
+}
+
+.symptom-finder-results h1 {
+  padding: 20px 20px 10px;
+  color: #fff;
+}
+
+.visible {
+  display: block;
+}
+
+.hidden {
+  display: none;
+}
