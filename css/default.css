@@ -57,6 +57,14 @@ body p a {
   border-bottom: 1px solid #666;
 }
 
+strong {
+	font-weight: bold;
+}
+
+.clear {
+	
+}
+
 /* Basic site */
 
 .red-light-nav {
@@ -184,31 +192,40 @@ body p a {
   color: #666;
 }
 
-.red-light-sidebar {
-  clear: left;
-  float: left;
-  width: 163px;
-  margin: 150px 0 20px 50px;
-}
 
 h1 {
   font-family: 'Arvo', serif;
   font-size: 16px;
   padding: 0 0 15px 0;
   margin: 0 0 15px 0;
-  border-bottom: 2px dotted #ddd;
   color: #666;
   line-height: 1.5em;
 }
 
 .red-light-sidebar p {
   line-height: 1.5em;
+  margin-bottom: 10px;
   font-style: italic;
   color: #888;
 }
 
+.red-light-sidebar h1 {
+	border-bottom: 2px dashed #ccc;
+}
+
 .red-light-page {
-  margin: 50px 50px 50px 263px;
+  margin: 50px 50px 50px 0;
+}
+
+.red-light-sidebar {
+  position: relative;
+  float: left;
+  width: 163px;
+  margin: 120px 0 20px 50px;
+}
+
+.red-light-page-inner {
+	margin: 0 20px 20px 265px;
 }
 
 /* Toggle */
@@ -448,4 +465,34 @@ h1 {
 
 .hidden {
   display: none;
+}
+
+/* Testimonials */
+
+.testimonial {
+	border: 1px solid #ddd;
+	padding: 20px;
+	line-height: 1.5em;
+	margin-bottom: 20px;
+	overflow: auto;
+	width: 100%;
+}
+
+.testimonial .story {
+	margin-right: 185px;
+}
+
+.testimonial .details {
+	float: right;
+	width: 150px;
+}
+
+.testimonial .details .name {
+	font-family: 'Arvo', serif;
+	font-size: 1.4em;
+	margin-bottom: 5px;
+}
+
+.rating {
+	margin-top: 15px;
 }
