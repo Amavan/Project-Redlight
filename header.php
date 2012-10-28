@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <title>
-      <?  
+      <?php  
         
         if($page_title) {
           echo $page_title . ' - ';
@@ -24,19 +24,19 @@
     
     <div class="red-light-nav">
     
-        <a href="index.php"><h1 class="logo"><? echoTranslation('site-name-html'); ?></h1></a>
+        <a href="index.php"><h1 class="logo"><?php echoTranslation('site-name-html'); ?></h1></a>
         
         <div class="right">
-          <a href="search.php" <? selectionHandler('search'); ?>><span><? echoTranslation('search-title'); ?></span></a>
+          <a href="search.php" <?php selectionHandler('search'); ?>><span><?php echoTranslation('search-title'); ?></span></a>
         </div>
         <div class="right">
-          <a href="testimonials.php" <? selectionHandler('testimonials'); ?>><span><? echoTranslation('testimonials-title'); ?></span></a>
+          <a href="testimonials.php" <?php selectionHandler('testimonials'); ?>><span><?php echoTranslation('testimonials-title'); ?></span></a>
         </div>
         <div>
-          <a href="index.php" <? selectionHandler('symptom-finder'); ?>><span><? echoTranslation('symptom-finder-title'); ?></span></a>
+          <a href="index.php" <?php selectionHandler('symptom-finder'); ?>><span><?php echoTranslation('symptom-finder-title'); ?></span></a>
         </div>
         <div id="rl-browse-btn">
-          <a href="#"><span><? echoTranslation('browse-by-section'); ?></span></a>
+          <a href="#"><span><?php echoTranslation('browse-by-section'); ?></span></a>
           <div>
             <ul>
               <li><span>1</span> Body Part-Specific Health Problems
