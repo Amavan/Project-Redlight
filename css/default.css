@@ -475,7 +475,6 @@ h1 {
 	line-height: 1.5em;
 	margin-bottom: 20px;
 	overflow: auto;
-	width: 100%;
 }
 
 .testimonial .story {
@@ -495,4 +494,59 @@ h1 {
 
 .rating {
 	margin-top: 15px;
+}
+
+.testimonial-sort {
+	float: right;
+	font-size: 14px;
+}
+
+.testimonial-sort a {
+	display: inline-block;
+	margin: 0 0 0 15px;
+	color: #666;
+	text-decoration: none;
+	border-bottom: none;
+}
+
+.testimonial-sort a.selected {
+	font-weight: bold;
+	border-bottom: 2px solid #999;
+}
+
+/* Testimonial Submit Story */
+
+.submit-story span {
+	font-family: 'Arvo', serif;
+	font-size: 14px;
+	display: block;
+	margin: 10px 0 3px 0;
+}
+
+.submit-story #submit-btn {
+	margin: 15px 0;	
+}
+
+.submit-story textarea, .submit-story input {
+	width: 300px;
+	border: 1px solid #aaa;
+	font-family: 'Arvo', serif;
+	font-size: 14px;
+	padding: 5px;
+}
+
+.submit-story button {
+	font-family: 'Arvo', serif;
+	font-size: 14px;
+	padding: 7px 10px;
+}
+
+.submit-story .required {
+	color: #999;
+	margin: 20px 0 0 0;
+}
+
+.submit-story .error {
+	color: red;
+	margin: 0  0 25px 0;
 }
