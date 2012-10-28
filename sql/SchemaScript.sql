@@ -156,9 +156,9 @@ CREATE  TABLE IF NOT EXISTS `wdab_redlight_warning_sig_91512`.`Testimonials` (
   `TestimonialID` INT NOT NULL AUTO_INCREMENT ,
   `LangID` INT NOT NULL ,
   `User_Name` VARCHAR(100) NOT NULL ,
-  `Testimonial` TEXT NOT NULL ,
+  `Testiomonial` TEXT NOT NULL ,
   `Email_Address` VARCHAR(100) NULL ,
-  `Date_Time` DATETIME NOT NULL ,
+  `Date_Time` TIMESTAMP NOT NULL ,
   `Tip_Number` INT NULL ,
   `Thumbs_Up` INT NOT NULL DEFAULT 0 ,
   `Thumbs_Down` INT NOT NULL DEFAULT 0 ,
@@ -514,6 +514,105 @@ USE `wdab_redlight_warning_sig_91512`$$
 CREATE PROCEDURE `wdab_redlight_warning_sig_91512`.`addLanguage` (IN langCode varchar(5), IN langName varchar(45))
 BEGIN
 	INSERT INTO Languages (LangCode, DisplayName) VALUES (langCode, langName);
+END$$
+
+DELIMITER ;
+
+-- -----------------------------------------------------
+-- procedure getTestimonialsByDate
+-- -----------------------------------------------------
+
+USE `wdab_redlight_warning_sig_91512`;
+DROP procedure IF EXISTS `wdab_redlight_warning_sig_91512`.`getTestimonialsByDate`;
+
+DELIMITER $$
+USE `wdab_redlight_warning_sig_91512`$$
+CREATE PROCEDURE `wdab_redlight_warning_sig_91512`.`getTestimonialsByDate` (IN langCode VARCHAR(5))
+BEGIN	
+   DECLARE language_id INT;
+   SET language_id = getLangID(langCode);
+   
+   SELECT T.TestimonialID AS ID, T.User_Name AS 'Name', T.Date_Time AS 'Date and Time', T.Tip_Number AS TipNo, T.Thumbs_Up AS ThumbsUp, T.Thumbs_Down AS ThumbsDown
+   FROM Testimonials WHERE T.LangID = language_id ORDER BY T.Thumbs_Up-T.Thumbs_Down DESC;
+END$$
+
+DELIMITER ;
+
+-- -----------------------------------------------------
+-- procedure getTestimonialsByRating
+-- -----------------------------------------------------
+
+USE `wdab_redlight_warning_sig_91512`;
+DROP procedure IF EXISTS `wdab_redlight_warning_sig_91512`.`getTestimonialsByRating`;
+
+DELIMITER $$
+USE `wdab_redlight_warning_sig_91512`$$
+CREATE PROCEDURE `wdab_redlight_warning_sig_91512`.`getTestimonialsByRating` (IN langCode VARCHAR(5))
+BEGIN	
+   DECLARE language_id INT;
+   SET language_id = getLangID(langCode);
+   
+   SELECT T.TestimonialID AS ID, T.User_Name AS Name, T.Date_Time AS 'Date and Time', T.Tip_Number AS TipNo, T.Thumbs_Up AS ThumbsUp, T.Thumbs_Down AS ThumbsDown
+   FROM Testimonials WHERE T.LangID = language_id ORDER BY T.Thumbs_Up-T.Thumbs_Down DESC;
+END$$
+
+DELIMITER ;
+
+-- -----------------------------------------------------
+-- procedure insertTestimonial
+-- -----------------------------------------------------
+
+USE `wdab_redlight_warning_sig_91512`;
+DROP procedure IF EXISTS `wdab_redlight_warning_sig_91512`.`insertTestimonial`;
+
+DELIMITER $$
+USE `wdab_redlight_warning_sig_91512`$$
+
+CREATE PROCEDURE `wdab_redlight_warning_sig_91512`.`insertTestimonial` (IN langCode Varchar(5), IN userName Varchar(100), IN testimonial TEXT, IN emailAddress Varchar(100), IN tipNumber INT)
+BEGIN
+	DECLARE language_id INT;
+	SET language_id = getLangID(langCode);
+	INSERT INTO Testimonials (LangID, User_Name, Testimonial, Email_Address, Date_Time, Tip_Number) VALUES (language_id, userName, testimonial, emailAddress, tipNumber);
+END$$
+
+DELIMITER ;
+
+-- -----------------------------------------------------
+-- procedure thumbsUpTestimonial
+-- -----------------------------------------------------
+
+USE `wdab_redlight_warning_sig_91512`;
+DROP procedure IF EXISTS `wdab_redlight_warning_sig_91512`.`thumbsUpTestimonial`;
+
+DELIMITER $$
+USE `wdab_redlight_warning_sig_91512`$$
+
+CREATE PROCEDURE `wdab_redlight_warning_sig_91512`.`thumbsUpTestimonial` (IN testimonialID INT)
+
+BEGIN
+	UPDATE Testimonial
+	SET Thumbs_Up = Thumbs_Up + 1
+	WHERE TestimonialID = testimonialID;
+END$$
+
+DELIMITER ;
+
+-- -----------------------------------------------------
+-- procedure thumbsDownTestimonial
+-- -----------------------------------------------------
+
+USE `wdab_redlight_warning_sig_91512`;
+DROP procedure IF EXISTS `wdab_redlight_warning_sig_91512`.`thumbsDownTestimonial`;
+
+DELIMITER $$
+USE `wdab_redlight_warning_sig_91512`$$
+
+CREATE PROCEDURE `wdab_redlight_warning_sig_91512`.`thumbsDownTestimonial` (IN testimonialID INT)
+
+BEGIN
+	UPDATE Testimonial
+	SET Thumbs_Down = Thumbs_Down + 1
+	WHERE TestimonialID = testimonialID;
 END$$
 
 DELIMITER ;
