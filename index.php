@@ -1,4 +1,4 @@
-<?
+<?php
 
 require('global.php');
 
@@ -13,7 +13,7 @@ require('header.php');
 
 <div class="toggles">
   
-  <h1><? echoTranslation('symptom-finder-title'); ?></h1>
+  <h1><?php echoTranslation('symptom-finder-title'); ?></h1>
   
   <div class="toggle-container"><span>1</span>
     <div class="toggle">
@@ -70,4 +70,4 @@ require('header.php');
   new redlight.SymptomFinder();
 </script>
 
-<? require('footer.php'); ?>
+<?php require('footer.php'); ?>

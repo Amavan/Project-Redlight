@@ -1,4 +1,4 @@
-<? 
+<?php 
 
 require('global.php');
 
@@ -11,4 +11,4 @@ require('header.php');
 
 <p>Search</p>
 
-<? require('footer.php'); ?>
+<?php require('footer.php'); ?>
