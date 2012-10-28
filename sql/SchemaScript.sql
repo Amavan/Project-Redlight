@@ -59,12 +59,10 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `wdab_redlight_warning_sig_91512`.`Symptom` ;
 
 CREATE  TABLE IF NOT EXISTS `wdab_redlight_warning_sig_91512`.`Symptom` (
-  `SymptomID` INT NOT NULL AUTO_INCREMENT ,
+  `SymptomID` INT NOT NULL ,
   `CategoryID` INT NOT NULL ,
-  `WorkingName` VARCHAR(45) NOT NULL ,
   PRIMARY KEY (`SymptomID`, `CategoryID`) ,
   INDEX `fk_Symptom_Symptom_Category1_idx` (`CategoryID` ASC) ,
-  UNIQUE INDEX `WorkingName_UNIQUE` (`WorkingName` ASC) ,
   CONSTRAINT `fk_Symptom_Symptom_Category1`
     FOREIGN KEY (`CategoryID` )
     REFERENCES `wdab_redlight_warning_sig_91512`.`Symptom_Category` (`CategoryID` )
@@ -82,7 +80,7 @@ CREATE  TABLE IF NOT EXISTS `wdab_redlight_warning_sig_91512`.`Symptom_Translati
   `LangID` INT NOT NULL ,
   `SymptomID` INT NOT NULL ,
   `ShortDesc` VARCHAR(100) NULL ,
-  `LongDesc` VARCHAR(250) NULL ,
+  `LongDesc` TEXT NULL ,
   PRIMARY KEY (`LangID`, `SymptomID`) ,
   INDEX `fk_Symptom_Translation_Languages1_idx` (`LangID` ASC) ,
   INDEX `fk_Symptom_Translation_Symptom1_idx` (`SymptomID` ASC) ,
@@ -146,6 +144,31 @@ CREATE  TABLE IF NOT EXISTS `wdab_redlight_warning_sig_91512`.`Category_Translat
     REFERENCES `wdab_redlight_warning_sig_91512`.`Symptom_Category` (`CategoryID` )
     ON DELETE CASCADE
     ON UPDATE CASCADE)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `wdab_redlight_warning_sig_91512`.`Testimonials`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `wdab_redlight_warning_sig_91512`.`Testimonials` ;
+
+CREATE  TABLE IF NOT EXISTS `wdab_redlight_warning_sig_91512`.`Testimonials` (
+  `TestimonialID` INT NOT NULL AUTO_INCREMENT ,
+  `LangID` INT NOT NULL ,
+  `User_Name` VARCHAR(100) NOT NULL ,
+  `Testimonial` TEXT NOT NULL ,
+  `Email_Address` VARCHAR(100) NULL ,
+  `Date_Time` DATETIME NOT NULL ,
+  `Tip_Number` INT NULL ,
+  `Thumbs_Up` INT NOT NULL DEFAULT 0 ,
+  `Thumbs_Down` INT NOT NULL DEFAULT 0 ,
+  PRIMARY KEY (`TestimonialID`, `LangID`) ,
+  INDEX `fk_Testimonials_Languages1_idx` (`LangID` ASC) ,
+  CONSTRAINT `fk_Testimonials_Languages1`
+    FOREIGN KEY (`LangID` )
+    REFERENCES `wdab_redlight_warning_sig_91512`.`Languages` (`LangID` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 

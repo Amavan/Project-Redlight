@@ -4,6 +4,7 @@ require('global.php');
 
 $page_title = getTranslation('symptom-finder-title');
 $page_id = "symptom-finder";
+$sidebar_file = "introduction.php";
 
 require('header.php');
 

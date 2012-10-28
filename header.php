@@ -52,11 +52,12 @@
         </div>
 
     </div>
-    
-        
-        <div class="red-light-sidebar">    
-          <h1>Introduction</h1>
-          <p>People do not always know when it is urgent for them to see a doctor or to get a child, friend, or loved one to the doctor. They don't know whether to go to the emergency room or to make an appointment with their primary care doctor or a specialist. <a href="#">Read more</a></p>
-        </div>
 
-    <div class="red-light-page">
+    	<div class="red-light-page">
+	
+	
+			<div class="red-light-sidebar">
+		  		<?php	if($sidebar_file) { include($sidebar_file); } ?>
+			</div>
+			
+			<div class="red-light-page-inner">
