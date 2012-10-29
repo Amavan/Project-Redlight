@@ -8,7 +8,7 @@ $en = array(
   "testimonials-title" => "Testimonials",
   "symptom-finder-title" => "Symptom Finder",
   "search-title" => "Search",
-  "browse-by-section" => "Browse by section",
+  "browse-by-section" => "Browse by section ↓",
   "add-tip-title" => "Share your story"
 );
 

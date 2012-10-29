@@ -21,15 +21,29 @@ function checkForm() {
 }
 
 function submitForm() {
-	//SQL here
-	header("Location: testimonials.php");
+	global $lang_code;
+	$name = mysql_real_escape_string($_POST['name']);
+	$message = mysql_real_escape_string($_POST['message']);
+	$email = mysql_real_escape_string($_POST['email']);
+	$location = mysql_real_escape_string($_POST['location']);
+	$tip = 0;
+	$query = "call insertTestimonial('$lang_code', '$name', '$message', '$email', $tip, '$location');";
+	$result = mysql_query($query);
+	if (!$result) {
+	    $message  = 'Invalid query: ' . mysql_error() . "\n";
+	    $message .= 'Whole query: ' . $query;
+	    die($message);
+	}
+	else {
+		header("Location: testimonials.php");
+	}
 }
 
 ?>
 
 <div class="submit-story">
 
-<h1>Submit Story</h1>
+<h1>Share your story</h1>
 
 <?php
 

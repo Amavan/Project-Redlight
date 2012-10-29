@@ -1,11 +1,11 @@
 <?php
 
-$lang_code = 'en';
+$lang_code = 'en_us';
 
 require('translations/en.php');
 
 $langs = array(
-  'en' => $en
+  'en_us' => $en
 );
 
 $string;
