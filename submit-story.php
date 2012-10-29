@@ -21,7 +21,14 @@ function checkForm() {
 }
 
 function submitForm() {
-	//SQL here
+	global $lang_code;
+	$name = mysql_real_escape_string($_POST['name']);
+	$message = mysql_real_escape_string($_POST['message']);
+	$email = mysql_real_escape_string($_POST['email']);
+	$location = mysql_real_escape_string($_POST['location']);
+	$tip = intval(mysql_real_escape_string($_POST['tip']));
+	//TODO: check if Tip is valid entry
+	$result = sql("call insertTestimonial('$lang_code', '$name', '$message', '$email', $tip, '$location');");
 	header("Location: testimonials.php");
 }
 
@@ -29,14 +36,12 @@ function submitForm() {
 
 <div class="submit-story">
 
-<h1>Submit Story</h1>
+	<h1>Share your story</h1>
 
 <?php
-
 	if ($errorMessage) { 
 		echo '<p class="error">' . $errorMessage . '</p>';
 	}
-
 ?>
 
 	<form action="submit-story.php" method="post">

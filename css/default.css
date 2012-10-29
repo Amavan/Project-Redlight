@@ -102,6 +102,22 @@ strong {
   color: #000;
 }
 
+.red-light-nav > div:hover ul a span {
+  border-bottom: none;
+}
+
+.red-light-nav > div:hover ul a {
+  font-size: 14px;
+  margin: 0;
+  padding: 8px 10px;
+}
+
+.red-light-nav > div:hover ul a:hover,
+.red-light-nav > div:hover ul a:hover span {
+  background: #888;
+  color: #fff;
+}
+
 .red-light-nav a.selected {
   color: #333;
   font-weight: 700;
@@ -151,6 +167,24 @@ strong {
   letter-spacing: 0.15em;
 }
 
+/* Footer */
+
+.red-light-footer {
+  clear: both;
+  background: #f1f1f1;
+  border: 2px solid #ddd;
+  border-left: none;
+  border-right: none;
+  padding: 10px 50px;
+  margin-top: 100px;
+}
+
+.red-light-footer p {
+	font-size: 10px;
+	color: #999;
+	margin: 10px 0;
+}
+
 /* Nav */
 #rl-browse-btn {
   position: relative;
@@ -175,7 +209,6 @@ strong {
   font-family: 'Arvo', serif;
   background: #fff;
   font-size: 14px;
-  padding: 7px 10px;
   box-shadow: 0 3px 3px rgba(0,0,0,.2);
 }
 
@@ -192,10 +225,9 @@ strong {
   color: #666;
 }
 
-
 h1 {
   font-family: 'Arvo', serif;
-  font-size: 16px;
+  font-size: 22px;
   padding: 0 0 15px 0;
   margin: 0 0 15px 0;
   color: #666;
@@ -210,7 +242,8 @@ h1 {
 }
 
 .red-light-sidebar h1 {
-	border-bottom: 2px dashed #ccc;
+  border-bottom: 2px dashed #ccc;
+  font-size: 16px;
 }
 
 .red-light-page {
@@ -221,7 +254,7 @@ h1 {
   position: relative;
   float: left;
   width: 163px;
-  margin: 120px 0 20px 50px;
+  margin: 90px 0 50px 50px;
 }
 
 .red-light-page-inner {
@@ -470,6 +503,7 @@ h1 {
 /* Testimonials */
 
 .testimonial {
+	position: relative;
 	border: 1px solid #ddd;
 	padding: 20px;
 	line-height: 1.5em;
@@ -477,8 +511,21 @@ h1 {
 	overflow: auto;
 }
 
+.testimonial::after {
+	content: ' ';
+	display: block;
+	background: #f1f1f1;
+	position: absolute;
+	top: 0;
+	width: 195px;
+	bottom: 0;
+	right: 0;
+	z-index: -1;
+	border-left: 1px solid #DDD;
+}
+
 .testimonial .story {
-	margin-right: 185px;
+	margin-right: 210px;
 }
 
 .testimonial .details {
@@ -496,6 +543,32 @@ h1 {
 	margin-top: 15px;
 }
 
+.rating a {
+	opacity: 0.6;
+	border-bottom: none;
+}
+
+.rating a:hover.down {
+	position: relative;
+	top: 1px;
+	padding-top: 1px;	
+}
+
+.rating a:hover.up {
+	position: relative;
+	top: -1px;
+	padding-bottom: 1px;
+}
+
+
+.rating a:hover {
+	opacity: 1;
+}
+
+.rating {
+	color: #999;
+}
+
 .testimonial-sort {
 	float: right;
 	font-size: 14px;
@@ -510,8 +583,8 @@ h1 {
 }
 
 .testimonial-sort a.selected {
-	font-weight: bold;
-	border-bottom: 2px solid #999;
+	border-bottom: 2px solid #ccc;
+	border-top: 2px solid #ccc;
 }
 
 /* Testimonial Submit Story */
