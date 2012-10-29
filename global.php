@@ -15,9 +15,11 @@ function selectionHandler($id) {
 
 //Global SQL connection statement
 function sqlConnect() {
+	global $sqlConnection;
 	$domain = "";
 	$username = "";
 	$password = "";
+	$db = "";
 
 	try {
 	    include "sql.php";
@@ -26,11 +28,22 @@ function sqlConnect() {
 	    echo 'The SQL connection settings file does not exist.';
 	}
 	
-	$link = mysql_connect($domain, $username, $password);
-	if (!$link) {
+	$sqlConnection = mysql_connect($domain, $username, $password);
+	if (!$sqlConnection) {
 	    die('Could not connect: ' . mysql_error());
 	}
-	mysql_select_db('willifor_redlight');
+	mysql_select_db($db, $sqlConnection);
+}
+
+//Basic SQL call with error handling
+function sql($query) {
+	$result = mysql_query($query);
+	if (!$result) {
+	    $message  = 'Invalid query: ' . mysql_error() . "\n";
+	    $message .= 'Whole query: ' . $query;
+	    die($message);
+	}
+	return $result;
 }
 
 ?>
