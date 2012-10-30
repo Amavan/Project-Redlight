@@ -2,16 +2,12 @@ SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 
-DROP SCHEMA IF EXISTS `wdab_redlight_warning_sig_91512` ;
-CREATE SCHEMA IF NOT EXISTS `wdab_redlight_warning_sig_91512` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci ;
-USE `wdab_redlight_warning_sig_91512` ;
-
 -- -----------------------------------------------------
--- Table `wdab_redlight_warning_sig_91512`.`Languages`
+-- Table `willifor_redlight`.`Languages`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `wdab_redlight_warning_sig_91512`.`Languages` ;
+DROP TABLE IF EXISTS `willifor_redlight`.`Languages` ;
 
-CREATE  TABLE IF NOT EXISTS `wdab_redlight_warning_sig_91512`.`Languages` (
+CREATE  TABLE IF NOT EXISTS `willifor_redlight`.`Languages` (
   `LangID` INT NOT NULL AUTO_INCREMENT ,
   `LangCode` VARCHAR(5) NOT NULL ,
   `DisplayName` VARCHAR(45) NULL ,
@@ -22,11 +18,11 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `wdab_redlight_warning_sig_91512`.`Region`
+-- Table `willifor_redlight`.`Region`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `wdab_redlight_warning_sig_91512`.`Region` ;
+DROP TABLE IF EXISTS `willifor_redlight`.`Region` ;
 
-CREATE  TABLE IF NOT EXISTS `wdab_redlight_warning_sig_91512`.`Region` (
+CREATE  TABLE IF NOT EXISTS `willifor_redlight`.`Region` (
   `RegionID` INT NOT NULL AUTO_INCREMENT ,
   `WorkingName` VARCHAR(45) NOT NULL ,
   PRIMARY KEY (`RegionID`) ,
@@ -35,11 +31,11 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `wdab_redlight_warning_sig_91512`.`Symptom_Category`
+-- Table `willifor_redlight`.`Symptom_Category`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `wdab_redlight_warning_sig_91512`.`Symptom_Category` ;
+DROP TABLE IF EXISTS `willifor_redlight`.`Symptom_Category` ;
 
-CREATE  TABLE IF NOT EXISTS `wdab_redlight_warning_sig_91512`.`Symptom_Category` (
+CREATE  TABLE IF NOT EXISTS `willifor_redlight`.`Symptom_Category` (
   `CategoryID` INT NOT NULL AUTO_INCREMENT ,
   `RegionID` INT NOT NULL ,
   `WorkingName` VARCHAR(45) NOT NULL ,
@@ -47,36 +43,36 @@ CREATE  TABLE IF NOT EXISTS `wdab_redlight_warning_sig_91512`.`Symptom_Category`
   UNIQUE INDEX `WorkingName_UNIQUE` (`WorkingName` ASC) ,
   CONSTRAINT `fk_Symptom_Category_Body_Region`
     FOREIGN KEY (`RegionID` )
-    REFERENCES `wdab_redlight_warning_sig_91512`.`Region` (`RegionID` )
+    REFERENCES `willifor_redlight`.`Region` (`RegionID` )
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `wdab_redlight_warning_sig_91512`.`Symptom`
+-- Table `willifor_redlight`.`Symptom`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `wdab_redlight_warning_sig_91512`.`Symptom` ;
+DROP TABLE IF EXISTS `willifor_redlight`.`Symptom` ;
 
-CREATE  TABLE IF NOT EXISTS `wdab_redlight_warning_sig_91512`.`Symptom` (
+CREATE  TABLE IF NOT EXISTS `willifor_redlight`.`Symptom` (
   `SymptomID` INT NOT NULL ,
   `CategoryID` INT NOT NULL ,
   PRIMARY KEY (`SymptomID`, `CategoryID`) ,
   INDEX `fk_Symptom_Symptom_Category1_idx` (`CategoryID` ASC) ,
   CONSTRAINT `fk_Symptom_Symptom_Category1`
     FOREIGN KEY (`CategoryID` )
-    REFERENCES `wdab_redlight_warning_sig_91512`.`Symptom_Category` (`CategoryID` )
+    REFERENCES `willifor_redlight`.`Symptom_Category` (`CategoryID` )
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `wdab_redlight_warning_sig_91512`.`Symptom_Translation`
+-- Table `willifor_redlight`.`Symptom_Translation`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `wdab_redlight_warning_sig_91512`.`Symptom_Translation` ;
+DROP TABLE IF EXISTS `willifor_redlight`.`Symptom_Translation` ;
 
-CREATE  TABLE IF NOT EXISTS `wdab_redlight_warning_sig_91512`.`Symptom_Translation` (
+CREATE  TABLE IF NOT EXISTS `willifor_redlight`.`Symptom_Translation` (
   `LangID` INT NOT NULL ,
   `SymptomID` INT NOT NULL ,
   `ShortDesc` VARCHAR(100) NULL ,
@@ -86,23 +82,23 @@ CREATE  TABLE IF NOT EXISTS `wdab_redlight_warning_sig_91512`.`Symptom_Translati
   INDEX `fk_Symptom_Translation_Symptom1_idx` (`SymptomID` ASC) ,
   CONSTRAINT `fk_Symptom_Translation_Languages1`
     FOREIGN KEY (`LangID` )
-    REFERENCES `wdab_redlight_warning_sig_91512`.`Languages` (`LangID` )
+    REFERENCES `willifor_redlight`.`Languages` (`LangID` )
     ON DELETE CASCADE
     ON UPDATE CASCADE,
   CONSTRAINT `fk_Symptom_Translation_Symptom1`
     FOREIGN KEY (`SymptomID` )
-    REFERENCES `wdab_redlight_warning_sig_91512`.`Symptom` (`SymptomID` )
+    REFERENCES `willifor_redlight`.`Symptom` (`SymptomID` )
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `wdab_redlight_warning_sig_91512`.`Region_Translation`
+-- Table `willifor_redlight`.`Region_Translation`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `wdab_redlight_warning_sig_91512`.`Region_Translation` ;
+DROP TABLE IF EXISTS `willifor_redlight`.`Region_Translation` ;
 
-CREATE  TABLE IF NOT EXISTS `wdab_redlight_warning_sig_91512`.`Region_Translation` (
+CREATE  TABLE IF NOT EXISTS `willifor_redlight`.`Region_Translation` (
   `LangID` INT NOT NULL ,
   `RegionID` INT NOT NULL ,
   `DisplayName` VARCHAR(45) NULL ,
@@ -111,23 +107,23 @@ CREATE  TABLE IF NOT EXISTS `wdab_redlight_warning_sig_91512`.`Region_Translatio
   INDEX `fk_Region_Translation_Body_Region1_idx` (`RegionID` ASC) ,
   CONSTRAINT `fk_Region_Translation_Languages1`
     FOREIGN KEY (`LangID` )
-    REFERENCES `wdab_redlight_warning_sig_91512`.`Languages` (`LangID` )
+    REFERENCES `willifor_redlight`.`Languages` (`LangID` )
     ON DELETE CASCADE
     ON UPDATE CASCADE,
   CONSTRAINT `fk_Region_Translation_Body_Region1`
     FOREIGN KEY (`RegionID` )
-    REFERENCES `wdab_redlight_warning_sig_91512`.`Region` (`RegionID` )
+    REFERENCES `willifor_redlight`.`Region` (`RegionID` )
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `wdab_redlight_warning_sig_91512`.`Category_Translation`
+-- Table `willifor_redlight`.`Category_Translation`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `wdab_redlight_warning_sig_91512`.`Category_Translation` ;
+DROP TABLE IF EXISTS `willifor_redlight`.`Category_Translation` ;
 
-CREATE  TABLE IF NOT EXISTS `wdab_redlight_warning_sig_91512`.`Category_Translation` (
+CREATE  TABLE IF NOT EXISTS `willifor_redlight`.`Category_Translation` (
   `LangID` INT NOT NULL ,
   `CategoryID` INT NOT NULL ,
   `DisplayName` VARCHAR(45) NULL ,
@@ -136,37 +132,38 @@ CREATE  TABLE IF NOT EXISTS `wdab_redlight_warning_sig_91512`.`Category_Translat
   INDEX `fk_Category_Translation_Symptom_Category1_idx` (`CategoryID` ASC) ,
   CONSTRAINT `fk_Category_Translation_Languages1`
     FOREIGN KEY (`LangID` )
-    REFERENCES `wdab_redlight_warning_sig_91512`.`Languages` (`LangID` )
+    REFERENCES `willifor_redlight`.`Languages` (`LangID` )
     ON DELETE CASCADE
     ON UPDATE CASCADE,
   CONSTRAINT `fk_Category_Translation_Symptom_Category1`
     FOREIGN KEY (`CategoryID` )
-    REFERENCES `wdab_redlight_warning_sig_91512`.`Symptom_Category` (`CategoryID` )
+    REFERENCES `willifor_redlight`.`Symptom_Category` (`CategoryID` )
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `wdab_redlight_warning_sig_91512`.`Testimonials`
+-- Table `willifor_redlight`.`Testimonials`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `wdab_redlight_warning_sig_91512`.`Testimonials` ;
+DROP TABLE IF EXISTS `willifor_redlight`.`Testimonials` ;
 
-CREATE  TABLE IF NOT EXISTS `wdab_redlight_warning_sig_91512`.`Testimonials` (
+CREATE  TABLE IF NOT EXISTS `willifor_redlight`.`Testimonials` (
   `TestimonialID` INT NOT NULL AUTO_INCREMENT ,
   `LangID` INT NOT NULL ,
   `User_Name` VARCHAR(100) NOT NULL ,
   `Testimonial` TEXT NOT NULL ,
   `Email_Address` VARCHAR(100) NULL ,
-  `Date_Time` DATETIME NOT NULL ,
+  `Date_Time` TIMESTAMP NOT NULL ,
   `Tip_Number` INT NULL ,
   `Thumbs_Up` INT NOT NULL DEFAULT 0 ,
   `Thumbs_Down` INT NOT NULL DEFAULT 0 ,
+  `Location` VARCHAR(255) NULL ,
   PRIMARY KEY (`TestimonialID`, `LangID`) ,
   INDEX `fk_Testimonials_Languages1_idx` (`LangID` ASC) ,
   CONSTRAINT `fk_Testimonials_Languages1`
     FOREIGN KEY (`LangID` )
-    REFERENCES `wdab_redlight_warning_sig_91512`.`Languages` (`LangID` )
+    REFERENCES `willifor_redlight`.`Languages` (`LangID` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -176,12 +173,12 @@ ENGINE = InnoDB;
 -- procedure addRegion
 -- -----------------------------------------------------
 
-USE `wdab_redlight_warning_sig_91512`;
-DROP procedure IF EXISTS `wdab_redlight_warning_sig_91512`.`addRegion`;
+USE `willifor_redlight`;
+DROP procedure IF EXISTS `willifor_redlight`.`addRegion`;
 
 DELIMITER $$
-USE `wdab_redlight_warning_sig_91512`$$
-CREATE PROCEDURE `wdab_redlight_warning_sig_91512`.`addRegion` (IN regionName varchar(25))
+USE `willifor_redlight`$$
+CREATE PROCEDURE `willifor_redlight`.`addRegion` (IN regionName varchar(25))
 BEGIN
 	INSERT INTO Region (WorkingName) VALUES (regionName);
 END$$
@@ -192,12 +189,12 @@ DELIMITER ;
 -- procedure addCategory
 -- -----------------------------------------------------
 
-USE `wdab_redlight_warning_sig_91512`;
-DROP procedure IF EXISTS `wdab_redlight_warning_sig_91512`.`addCategory`;
+USE `willifor_redlight`;
+DROP procedure IF EXISTS `willifor_redlight`.`addCategory`;
 
 DELIMITER $$
-USE `wdab_redlight_warning_sig_91512`$$
-CREATE PROCEDURE `wdab_redlight_warning_sig_91512`.`addCategory` (IN catName varchar(25), IN regionName varchar(25))
+USE `willifor_redlight`$$
+CREATE PROCEDURE `willifor_redlight`.`addCategory` (IN catName varchar(25), IN regionName varchar(25))
 BEGIN
 	DECLARE region_id INT;
 	SELECT RegionID INTO region_id FROM Region R WHERE R.WorkingName = regionName;
@@ -211,12 +208,12 @@ DELIMITER ;
 -- procedure addSymptom
 -- -----------------------------------------------------
 
-USE `wdab_redlight_warning_sig_91512`;
-DROP procedure IF EXISTS `wdab_redlight_warning_sig_91512`.`addSymptom`;
+USE `willifor_redlight`;
+DROP procedure IF EXISTS `willifor_redlight`.`addSymptom`;
 
 DELIMITER $$
-USE `wdab_redlight_warning_sig_91512`$$
-CREATE PROCEDURE `wdab_redlight_warning_sig_91512`.`addSymptom` (IN sympName varchar(25), IN catName varchar(25))
+USE `willifor_redlight`$$
+CREATE PROCEDURE `willifor_redlight`.`addSymptom` (IN sympName varchar(25), IN catName varchar(25))
 BEGIN
 	DECLARE category_id INT;
 	SELECT CategoryID INTO category_id FROM Symptom_Category WHERE WorkingName = catName;
@@ -230,12 +227,12 @@ DELIMITER ;
 -- procedure addRegionTranslation
 -- -----------------------------------------------------
 
-USE `wdab_redlight_warning_sig_91512`;
-DROP procedure IF EXISTS `wdab_redlight_warning_sig_91512`.`addRegionTranslation`;
+USE `willifor_redlight`;
+DROP procedure IF EXISTS `willifor_redlight`.`addRegionTranslation`;
 
 DELIMITER $$
-USE `wdab_redlight_warning_sig_91512`$$
-CREATE PROCEDURE `wdab_redlight_warning_sig_91512`.`addRegionTranslation` (IN langCode varchar(5), IN regionName varchar(25), IN translatedName varchar(25), IN translatedDescription varchar(45))
+USE `willifor_redlight`$$
+CREATE PROCEDURE `willifor_redlight`.`addRegionTranslation` (IN langCode varchar(5), IN regionName varchar(25), IN translatedName varchar(25), IN translatedDescription varchar(45))
 BEGIN
 	DECLARE language_id, region_id INT;
 	SET language_id = getLangID(langCode);
@@ -250,12 +247,12 @@ DELIMITER ;
 -- procedure addSymptomTranslation
 -- -----------------------------------------------------
 
-USE `wdab_redlight_warning_sig_91512`;
-DROP procedure IF EXISTS `wdab_redlight_warning_sig_91512`.`addSymptomTranslation`;
+USE `willifor_redlight`;
+DROP procedure IF EXISTS `willifor_redlight`.`addSymptomTranslation`;
 
 DELIMITER $$
-USE `wdab_redlight_warning_sig_91512`$$
-CREATE PROCEDURE `wdab_redlight_warning_sig_91512`.`addSymptomTranslation` (IN langCode varchar(5), IN sympName varchar(25), IN translatedShortDesc varchar(100), IN translatedLongDesc varchar(250))
+USE `willifor_redlight`$$
+CREATE PROCEDURE `willifor_redlight`.`addSymptomTranslation` (IN langCode varchar(5), IN sympName varchar(25), IN translatedShortDesc varchar(100), IN translatedLongDesc varchar(250))
 BEGIN
 	DECLARE language_id, symptom_id INT;
 	SET language_id = getLangID(langCode);
@@ -270,12 +267,12 @@ DELIMITER ;
 -- procedure addCategoryTranslation
 -- -----------------------------------------------------
 
-USE `wdab_redlight_warning_sig_91512`;
-DROP procedure IF EXISTS `wdab_redlight_warning_sig_91512`.`addCategoryTranslation`;
+USE `willifor_redlight`;
+DROP procedure IF EXISTS `willifor_redlight`.`addCategoryTranslation`;
 
 DELIMITER $$
-USE `wdab_redlight_warning_sig_91512`$$
-CREATE PROCEDURE `wdab_redlight_warning_sig_91512`.`addCategoryTranslation` (IN langCode varchar(5), IN catName varchar(25), IN translatedName varchar(25), IN translatedDescription varchar(45))
+USE `willifor_redlight`$$
+CREATE PROCEDURE `willifor_redlight`.`addCategoryTranslation` (IN langCode varchar(5), IN catName varchar(25), IN translatedName varchar(25), IN translatedDescription varchar(45))
 BEGIN
 	DECLARE language_id, cat_id INT;
 	SET language_id = getLangID(langCode);
@@ -290,12 +287,12 @@ DELIMITER ;
 -- procedure getRegion
 -- -----------------------------------------------------
 
-USE `wdab_redlight_warning_sig_91512`;
-DROP procedure IF EXISTS `wdab_redlight_warning_sig_91512`.`getRegion`;
+USE `willifor_redlight`;
+DROP procedure IF EXISTS `willifor_redlight`.`getRegion`;
 
 DELIMITER $$
-USE `wdab_redlight_warning_sig_91512`$$
-CREATE PROCEDURE `wdab_redlight_warning_sig_91512`.`getRegion` (IN langCode varchar(5), IN regionName varchar(25))
+USE `willifor_redlight`$$
+CREATE PROCEDURE `willifor_redlight`.`getRegion` (IN langCode varchar(5), IN regionName varchar(25))
 BEGIN
 	DECLARE language_id INT;
 	SET language_id = getLangID(langCode);
@@ -311,12 +308,12 @@ DELIMITER ;
 -- function getLangID
 -- -----------------------------------------------------
 
-USE `wdab_redlight_warning_sig_91512`;
-DROP function IF EXISTS `wdab_redlight_warning_sig_91512`.`getLangID`;
+USE `willifor_redlight`;
+DROP function IF EXISTS `willifor_redlight`.`getLangID`;
 
 DELIMITER $$
-USE `wdab_redlight_warning_sig_91512`$$
-CREATE FUNCTION `wdab_redlight_warning_sig_91512`.`getLangID`(langCode varchar(5))
+USE `willifor_redlight`$$
+CREATE FUNCTION `willifor_redlight`.`getLangID`(langCode varchar(5))
 RETURNS INT
 BEGIN
 	DECLARE id INT;
@@ -330,12 +327,12 @@ DELIMITER ;
 -- procedure getAllRegions
 -- -----------------------------------------------------
 
-USE `wdab_redlight_warning_sig_91512`;
-DROP procedure IF EXISTS `wdab_redlight_warning_sig_91512`.`getAllRegions`;
+USE `willifor_redlight`;
+DROP procedure IF EXISTS `willifor_redlight`.`getAllRegions`;
 
 DELIMITER $$
-USE `wdab_redlight_warning_sig_91512`$$
-CREATE PROCEDURE `wdab_redlight_warning_sig_91512`.`getAllRegions` (IN langCode varchar(5))
+USE `willifor_redlight`$$
+CREATE PROCEDURE `willifor_redlight`.`getAllRegions` (IN langCode varchar(5))
 BEGIN
 	DECLARE language_id INT;
 	SET language_id = getLangID(langCode);
@@ -351,12 +348,12 @@ DELIMITER ;
 -- procedure getCategory
 -- -----------------------------------------------------
 
-USE `wdab_redlight_warning_sig_91512`;
-DROP procedure IF EXISTS `wdab_redlight_warning_sig_91512`.`getCategory`;
+USE `willifor_redlight`;
+DROP procedure IF EXISTS `willifor_redlight`.`getCategory`;
 
 DELIMITER $$
-USE `wdab_redlight_warning_sig_91512`$$
-CREATE PROCEDURE `wdab_redlight_warning_sig_91512`.`getCategory` (IN langCode varchar(5), IN catName varchar(25))
+USE `willifor_redlight`$$
+CREATE PROCEDURE `willifor_redlight`.`getCategory` (IN langCode varchar(5), IN catName varchar(25))
 BEGIN
 	DECLARE language_id INT;
 	SET language_id = getLangID(langCode);
@@ -372,12 +369,12 @@ DELIMITER ;
 -- procedure getCategoriesByRegion
 -- -----------------------------------------------------
 
-USE `wdab_redlight_warning_sig_91512`;
-DROP procedure IF EXISTS `wdab_redlight_warning_sig_91512`.`getCategoriesByRegion`;
+USE `willifor_redlight`;
+DROP procedure IF EXISTS `willifor_redlight`.`getCategoriesByRegion`;
 
 DELIMITER $$
-USE `wdab_redlight_warning_sig_91512`$$
-CREATE PROCEDURE `wdab_redlight_warning_sig_91512`.`getCategoriesByRegion` (IN langCode varchar(5), IN regionName varchar(25))
+USE `willifor_redlight`$$
+CREATE PROCEDURE `willifor_redlight`.`getCategoriesByRegion` (IN langCode varchar(5), IN regionName varchar(25))
 BEGIN
 	DECLARE language_id INT;
 	SET language_id = getLangID(langCode);
@@ -394,12 +391,12 @@ DELIMITER ;
 -- procedure getAllCategories
 -- -----------------------------------------------------
 
-USE `wdab_redlight_warning_sig_91512`;
-DROP procedure IF EXISTS `wdab_redlight_warning_sig_91512`.`getAllCategories`;
+USE `willifor_redlight`;
+DROP procedure IF EXISTS `willifor_redlight`.`getAllCategories`;
 
 DELIMITER $$
-USE `wdab_redlight_warning_sig_91512`$$
-CREATE PROCEDURE `wdab_redlight_warning_sig_91512`.`getAllCategories` (IN langCode varchar(5))
+USE `willifor_redlight`$$
+CREATE PROCEDURE `willifor_redlight`.`getAllCategories` (IN langCode varchar(5))
 BEGIN
 	DECLARE language_id INT;
 	SET language_id = getLangID(langCode);
@@ -416,12 +413,12 @@ DELIMITER ;
 -- procedure getSymptom
 -- -----------------------------------------------------
 
-USE `wdab_redlight_warning_sig_91512`;
-DROP procedure IF EXISTS `wdab_redlight_warning_sig_91512`.`getSymptom`;
+USE `willifor_redlight`;
+DROP procedure IF EXISTS `willifor_redlight`.`getSymptom`;
 
 DELIMITER $$
-USE `wdab_redlight_warning_sig_91512`$$
-CREATE PROCEDURE `wdab_redlight_warning_sig_91512`.`getSymptom` (IN langCode varchar(5), IN sympName varchar(25))
+USE `willifor_redlight`$$
+CREATE PROCEDURE `willifor_redlight`.`getSymptom` (IN langCode varchar(5), IN sympName varchar(25))
 BEGIN
 	DECLARE language_id INT;
 	SET language_id = getLangID(langCode);
@@ -437,12 +434,12 @@ DELIMITER ;
 -- procedure getSymptomsByRegion
 -- -----------------------------------------------------
 
-USE `wdab_redlight_warning_sig_91512`;
-DROP procedure IF EXISTS `wdab_redlight_warning_sig_91512`.`getSymptomsByRegion`;
+USE `willifor_redlight`;
+DROP procedure IF EXISTS `willifor_redlight`.`getSymptomsByRegion`;
 
 DELIMITER $$
-USE `wdab_redlight_warning_sig_91512`$$
-CREATE PROCEDURE `wdab_redlight_warning_sig_91512`.`getSymptomsByRegion` (IN langCode varchar(5), IN regionName varchar(25))
+USE `willifor_redlight`$$
+CREATE PROCEDURE `willifor_redlight`.`getSymptomsByRegion` (IN langCode varchar(5), IN regionName varchar(25))
 BEGIN
 	DECLARE language_id INT;
 	SET language_id = getLangID(langCode);
@@ -460,12 +457,12 @@ DELIMITER ;
 -- procedure getSymptomsByCategory
 -- -----------------------------------------------------
 
-USE `wdab_redlight_warning_sig_91512`;
-DROP procedure IF EXISTS `wdab_redlight_warning_sig_91512`.`getSymptomsByCategory`;
+USE `willifor_redlight`;
+DROP procedure IF EXISTS `willifor_redlight`.`getSymptomsByCategory`;
 
 DELIMITER $$
-USE `wdab_redlight_warning_sig_91512`$$
-CREATE PROCEDURE `wdab_redlight_warning_sig_91512`.`getSymptomsByCategory` (IN langCode varchar(5), IN catName varchar(25))
+USE `willifor_redlight`$$
+CREATE PROCEDURE `willifor_redlight`.`getSymptomsByCategory` (IN langCode varchar(5), IN catName varchar(25))
 BEGIN
 	DECLARE language_id INT;
 	SET language_id = getLangID(langCode);
@@ -482,12 +479,12 @@ DELIMITER ;
 -- procedure getAllSymptoms
 -- -----------------------------------------------------
 
-USE `wdab_redlight_warning_sig_91512`;
-DROP procedure IF EXISTS `wdab_redlight_warning_sig_91512`.`getAllSymptoms`;
+USE `willifor_redlight`;
+DROP procedure IF EXISTS `willifor_redlight`.`getAllSymptoms`;
 
 DELIMITER $$
-USE `wdab_redlight_warning_sig_91512`$$
-CREATE PROCEDURE `wdab_redlight_warning_sig_91512`.`getAllSymptoms` (IN langCode varchar(5))
+USE `willifor_redlight`$$
+CREATE PROCEDURE `willifor_redlight`.`getAllSymptoms` (IN langCode varchar(5))
 BEGIN
 	DECLARE language_id INT;
 	SET language_id = getLangID(langCode);
@@ -506,14 +503,113 @@ DELIMITER ;
 -- procedure addLanguage
 -- -----------------------------------------------------
 
-USE `wdab_redlight_warning_sig_91512`;
-DROP procedure IF EXISTS `wdab_redlight_warning_sig_91512`.`addLanguage`;
+USE `willifor_redlight`;
+DROP procedure IF EXISTS `willifor_redlight`.`addLanguage`;
 
 DELIMITER $$
-USE `wdab_redlight_warning_sig_91512`$$
-CREATE PROCEDURE `wdab_redlight_warning_sig_91512`.`addLanguage` (IN langCode varchar(5), IN langName varchar(45))
+USE `willifor_redlight`$$
+CREATE PROCEDURE `willifor_redlight`.`addLanguage` (IN langCode varchar(5), IN langName varchar(45))
 BEGIN
 	INSERT INTO Languages (LangCode, DisplayName) VALUES (langCode, langName);
+END$$
+
+DELIMITER ;
+
+-- -----------------------------------------------------
+-- procedure getTestimonialsByDate
+-- -----------------------------------------------------
+
+USE `willifor_redlight`;
+DROP procedure IF EXISTS `willifor_redlight`.`getTestimonialsByDate`;
+
+DELIMITER $$
+USE `willifor_redlight`$$
+CREATE PROCEDURE `willifor_redlight`.`getTestimonialsByDate` (IN langCode VARCHAR(5))
+BEGIN	
+   DECLARE language_id INT;
+   SET language_id = getLangID(langCode);
+   
+   SELECT T.TestimonialID AS ID, T.User_Name AS Name, T.Testimonial AS Testimonial, T.Date_Time AS 'Timestamp', T.Tip_Number AS TipNo, T.Thumbs_Up AS ThumbsUp, T.Thumbs_Down AS ThumbsDown, Location As Location
+   FROM Testimonials T WHERE T.LangID = language_id ORDER BY T.Date_Time DESC;
+END$$
+
+DELIMITER ;
+
+-- -----------------------------------------------------
+-- procedure getTestimonialsByRating
+-- -----------------------------------------------------
+
+USE `willifor_redlight`;
+DROP procedure IF EXISTS `willifor_redlight`.`getTestimonialsByRating`;
+
+DELIMITER $$
+USE `willifor_redlight`$$
+CREATE PROCEDURE `willifor_redlight`.`getTestimonialsByRating` (IN langCode VARCHAR(5))
+BEGIN	
+   DECLARE language_id INT;
+   SET language_id = getLangID(langCode);
+   
+   SELECT T.TestimonialID AS ID, T.User_Name AS Name, T.Testimonial AS Testimonial, T.Date_Time AS 'Timestamp', T.Tip_Number AS TipNo, T.Thumbs_Up AS ThumbsUp, T.Thumbs_Down AS ThumbsDown, Location As Location
+   FROM Testimonials T WHERE T.LangID = language_id ORDER BY T.Thumbs_Up-T.Thumbs_Down DESC;
+END$$
+
+DELIMITER ;
+
+-- -----------------------------------------------------
+-- procedure insertTestimonial
+-- -----------------------------------------------------
+
+USE `willifor_redlight`;
+DROP procedure IF EXISTS `willifor_redlight`.`insertTestimonial`;
+
+DELIMITER $$
+USE `willifor_redlight`$$
+
+CREATE PROCEDURE `willifor_redlight`.`insertTestimonial` (IN langCode Varchar(5), IN userName Varchar(100), IN testimonial TEXT, IN emailAddress Varchar(100), IN tipNumber INT, IN location VARCHAR(255))
+BEGIN
+	DECLARE language_id INT;
+	SET language_id = getLangID(langCode);
+	INSERT INTO Testimonials (LangID, User_Name, Testimonial, Email_Address, Tip_Number, Date_Time, Location) VALUES (language_id, userName, testimonial, emailAddress, tipNumber, CURRENT_TIMESTAMP(), location);
+END$$
+
+DELIMITER ;
+
+-- -----------------------------------------------------
+-- procedure thumbsUpTestimonial
+-- -----------------------------------------------------
+
+USE `willifor_redlight`;
+DROP procedure IF EXISTS `willifor_redlight`.`thumbsUpTestimonial`;
+
+DELIMITER $$
+USE `willifor_redlight`$$
+
+CREATE PROCEDURE `willifor_redlight`.`thumbsUpTestimonial` (IN testimonialID INT)
+
+BEGIN
+	UPDATE Testimonials T
+	SET T.Thumbs_Up = T.Thumbs_Up + 1, T.Date_Time = T.Date_Time
+	WHERE T.TestimonialID = testimonialID;
+END$$
+
+DELIMITER ;
+
+-- -----------------------------------------------------
+-- procedure thumbsDownTestimonial
+-- -----------------------------------------------------
+
+USE `willifor_redlight`;
+DROP procedure IF EXISTS `willifor_redlight`.`thumbsDownTestimonial`;
+
+DELIMITER $$
+USE `willifor_redlight`$$
+
+CREATE PROCEDURE `willifor_redlight`.`thumbsDownTestimonial` (IN testimonialID INT)
+
+BEGIN
+	UPDATE Testimonials T
+	SET T.Thumbs_Down = T.Thumbs_Down + 1, T.Date_Time = T.Date_Time
+	WHERE T.TestimonialID = testimonialID;
 END$$
 
 DELIMITER ;
