@@ -42,7 +42,10 @@ redlight.SymptomFinder.prototype.init = function() {
   this._canvas = goog.dom.getElementByClass('symptom-finder-canvas');
   this._body = goog.dom.getElementByClass('body', this._canvas);
   this._label = goog.dom.getElementByClass('body-link', this._canvas);
+  this._result = goog.dom.getElementByClass('result-link');
   this._results = goog.dom.getElementByClass('symptom-finder-results');
+  this._subResults = goog.dom.getElementByClass('sub-result');
+  this._backBtn = goog.dom.getElementByClass('back-btn');
 
   goog.events.listen(this._adultBtn, goog.events.EventType.CLICK, function() { this.setAdultBtnState(true); }, null, this);
   goog.events.listen(this._childBtn, goog.events.EventType.CLICK, function() { this.setAdultBtnState(false); }, null, this);
@@ -51,6 +54,8 @@ redlight.SymptomFinder.prototype.init = function() {
   goog.events.listen(this._bodyBtn, goog.events.EventType.CLICK, function() { this.setBodyBtnState(true); }, null, this);
   goog.events.listen(this._listBtn, goog.events.EventType.CLICK, function() { this.setBodyBtnState(false); }, null, this);
   goog.events.listen(this._label, goog.events.EventType.CLICK, function() { this.bodyClick(); }, null, this);
+  goog.events.listen(this._result, goog.events.EventType.CLICK, function() { this.resultClick(); }, null, this);
+  goog.events.listen(this._backBtn, goog.events.EventType.CLICK, function() { this.backClick(); }, null, this);
 
 }
 
@@ -93,4 +98,12 @@ redlight.SymptomFinder.prototype.updateState = function() {
 redlight.SymptomFinder.prototype.bodyClick = function() {
   goog.dom.classes.enable(this._canvas, 'shift', true);
   goog.dom.classes.enable(this._results, 'hidden', false);
+}
+
+redlight.SymptomFinder.prototype.backClick = function() {
+  goog.dom.classes.enable(this._canvas, 'shift', false);
+}
+
+redlight.SymptomFinder.prototype.resultClick = function() {
+  goog.dom.classes.enable(this._subResults, 'hidden', !goog.dom.classes.has(this._subResults, 'hidden'));
 }
