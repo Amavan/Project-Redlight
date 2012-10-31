@@ -556,6 +556,49 @@ END$$
 DELIMITER ;
 
 -- -----------------------------------------------------
+-- procedure getTestimonialsByTip
+-- -----------------------------------------------------
+
+USE `willifor_redlight`;
+DROP procedure IF EXISTS `willifor_redlight`.`getTestimonialsByTip`;
+
+DELIMITER $$
+USE `willifor_redlight`$$
+CREATE PROCEDURE `willifor_redlight`.`getTestimonialsByTip` (IN langCode VARCHAR(5), IN tipNumber INT)
+BEGIN	
+   DECLARE language_id INT;
+   SET language_id = getLangID(langCode);
+   
+   SELECT T.TestimonialID AS ID, T.User_Name AS Name, T.Testimonial AS Testimonial, T.Date_Time AS 'Timestamp', T.Tip_Number AS TipNo, T.Thumbs_Up AS ThumbsUp, T.Thumbs_Down AS ThumbsDown, Location As Location
+   FROM Testimonials T WHERE T.LangID = language_id AND T.Tip_Number = tipNumber ORDER BY T.Thumbs_Up-T.Thumbs_Down DESC;
+END$$
+
+DELIMITER ;
+
+-- -----------------------------------------------------
+-- procedure getNTestimonialsByTip
+-- -----------------------------------------------------
+
+USE `willifor_redlight`;
+DROP procedure IF EXISTS `willifor_redlight`.`getNTestimonialsByTip`;
+
+DELIMITER $$
+USE `willifor_redlight`$$
+CREATE PROCEDURE `willifor_redlight`.`getNTestimonialsByTip` (IN langCode VARCHAR(5), IN tipNumber INT, IN rowLimit INT)
+BEGIN	
+   DECLARE language_id INT;
+   SET @language_id = getLangID(langCode);
+   SET @tip_number = tipNumber;
+   SET @row_limit = rowLimit;
+
+   PREPARE STMT FROM 'SELECT T.TestimonialID AS ID, T.User_Name AS Name, T.Testimonial AS Testimonial, T.Date_Time AS Timestamp, T.Tip_Number AS TipNo, T.Thumbs_Up AS ThumbsUp, T.Thumbs_Down AS ThumbsDown, Location As Location
+   FROM Testimonials T WHERE T.LangID = ? AND T.Tip_Number = ? ORDER BY T.Thumbs_Up-T.Thumbs_Down DESC LIMIT ?';
+   EXECUTE STMT USING @language_id, @tip_number, @row_limit;
+END$$
+
+DELIMITER ;
+
+-- -----------------------------------------------------
 -- procedure insertTestimonial
 -- -----------------------------------------------------
 
