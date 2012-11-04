@@ -2,6 +2,9 @@ SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 
+CREATE SCHEMA IF NOT EXISTS `willifor_redlight` ;
+USE `willifor_redlight` ;
+
 -- -----------------------------------------------------
 -- Table `willifor_redlight`.`Languages`
 -- -----------------------------------------------------
@@ -10,136 +13,10 @@ DROP TABLE IF EXISTS `willifor_redlight`.`Languages` ;
 CREATE  TABLE IF NOT EXISTS `willifor_redlight`.`Languages` (
   `LangID` INT NOT NULL AUTO_INCREMENT ,
   `LangCode` VARCHAR(5) NOT NULL ,
-  `DisplayName` VARCHAR(45) NULL ,
+  `DisplayName` VARCHAR(45) NULL DEFAULT NULL ,
   PRIMARY KEY (`LangID`) ,
   UNIQUE INDEX `LangID_UNIQUE` (`LangID` ASC) ,
   UNIQUE INDEX `LangCode_UNIQUE` (`LangCode` ASC) )
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `willifor_redlight`.`Region`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `willifor_redlight`.`Region` ;
-
-CREATE  TABLE IF NOT EXISTS `willifor_redlight`.`Region` (
-  `RegionID` INT NOT NULL AUTO_INCREMENT ,
-  `WorkingName` VARCHAR(45) NOT NULL ,
-  PRIMARY KEY (`RegionID`) ,
-  UNIQUE INDEX `WorkingName_UNIQUE` (`WorkingName` ASC) )
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `willifor_redlight`.`Symptom_Category`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `willifor_redlight`.`Symptom_Category` ;
-
-CREATE  TABLE IF NOT EXISTS `willifor_redlight`.`Symptom_Category` (
-  `CategoryID` INT NOT NULL AUTO_INCREMENT ,
-  `RegionID` INT NOT NULL ,
-  `WorkingName` VARCHAR(45) NOT NULL ,
-  PRIMARY KEY (`CategoryID`, `RegionID`) ,
-  UNIQUE INDEX `WorkingName_UNIQUE` (`WorkingName` ASC) ,
-  CONSTRAINT `fk_Symptom_Category_Body_Region`
-    FOREIGN KEY (`RegionID` )
-    REFERENCES `willifor_redlight`.`Region` (`RegionID` )
-    ON DELETE CASCADE
-    ON UPDATE CASCADE)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `willifor_redlight`.`Symptom`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `willifor_redlight`.`Symptom` ;
-
-CREATE  TABLE IF NOT EXISTS `willifor_redlight`.`Symptom` (
-  `SymptomID` INT NOT NULL ,
-  `CategoryID` INT NOT NULL ,
-  PRIMARY KEY (`SymptomID`, `CategoryID`) ,
-  INDEX `fk_Symptom_Symptom_Category1_idx` (`CategoryID` ASC) ,
-  CONSTRAINT `fk_Symptom_Symptom_Category1`
-    FOREIGN KEY (`CategoryID` )
-    REFERENCES `willifor_redlight`.`Symptom_Category` (`CategoryID` )
-    ON DELETE CASCADE
-    ON UPDATE CASCADE)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `willifor_redlight`.`Symptom_Translation`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `willifor_redlight`.`Symptom_Translation` ;
-
-CREATE  TABLE IF NOT EXISTS `willifor_redlight`.`Symptom_Translation` (
-  `LangID` INT NOT NULL ,
-  `SymptomID` INT NOT NULL ,
-  `ShortDesc` VARCHAR(100) NULL ,
-  `LongDesc` TEXT NULL ,
-  PRIMARY KEY (`LangID`, `SymptomID`) ,
-  INDEX `fk_Symptom_Translation_Languages1_idx` (`LangID` ASC) ,
-  INDEX `fk_Symptom_Translation_Symptom1_idx` (`SymptomID` ASC) ,
-  CONSTRAINT `fk_Symptom_Translation_Languages1`
-    FOREIGN KEY (`LangID` )
-    REFERENCES `willifor_redlight`.`Languages` (`LangID` )
-    ON DELETE CASCADE
-    ON UPDATE CASCADE,
-  CONSTRAINT `fk_Symptom_Translation_Symptom1`
-    FOREIGN KEY (`SymptomID` )
-    REFERENCES `willifor_redlight`.`Symptom` (`SymptomID` )
-    ON DELETE CASCADE
-    ON UPDATE CASCADE)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `willifor_redlight`.`Region_Translation`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `willifor_redlight`.`Region_Translation` ;
-
-CREATE  TABLE IF NOT EXISTS `willifor_redlight`.`Region_Translation` (
-  `LangID` INT NOT NULL ,
-  `RegionID` INT NOT NULL ,
-  `DisplayName` VARCHAR(45) NULL ,
-  `Description` VARCHAR(45) NULL ,
-  PRIMARY KEY (`LangID`, `RegionID`) ,
-  INDEX `fk_Region_Translation_Body_Region1_idx` (`RegionID` ASC) ,
-  CONSTRAINT `fk_Region_Translation_Languages1`
-    FOREIGN KEY (`LangID` )
-    REFERENCES `willifor_redlight`.`Languages` (`LangID` )
-    ON DELETE CASCADE
-    ON UPDATE CASCADE,
-  CONSTRAINT `fk_Region_Translation_Body_Region1`
-    FOREIGN KEY (`RegionID` )
-    REFERENCES `willifor_redlight`.`Region` (`RegionID` )
-    ON DELETE CASCADE
-    ON UPDATE CASCADE)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `willifor_redlight`.`Category_Translation`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `willifor_redlight`.`Category_Translation` ;
-
-CREATE  TABLE IF NOT EXISTS `willifor_redlight`.`Category_Translation` (
-  `LangID` INT NOT NULL ,
-  `CategoryID` INT NOT NULL ,
-  `DisplayName` VARCHAR(45) NULL ,
-  `Description` VARCHAR(45) NULL ,
-  PRIMARY KEY (`LangID`, `CategoryID`) ,
-  INDEX `fk_Category_Translation_Symptom_Category1_idx` (`CategoryID` ASC) ,
-  CONSTRAINT `fk_Category_Translation_Languages1`
-    FOREIGN KEY (`LangID` )
-    REFERENCES `willifor_redlight`.`Languages` (`LangID` )
-    ON DELETE CASCADE
-    ON UPDATE CASCADE,
-  CONSTRAINT `fk_Category_Translation_Symptom_Category1`
-    FOREIGN KEY (`CategoryID` )
-    REFERENCES `willifor_redlight`.`Symptom_Category` (`CategoryID` )
-    ON DELETE CASCADE
-    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
@@ -153,17 +30,175 @@ CREATE  TABLE IF NOT EXISTS `willifor_redlight`.`Testimonials` (
   `LangID` INT NOT NULL ,
   `User_Name` VARCHAR(100) NOT NULL ,
   `Testimonial` TEXT NOT NULL ,
-  `Email_Address` VARCHAR(100) NULL ,
+  `Email_Address` VARCHAR(100) NULL DEFAULT NULL ,
   `Date_Time` TIMESTAMP NOT NULL ,
-  `Tip_Number` INT NULL ,
+  `Tip_Number` INT NULL DEFAULT NULL ,
   `Thumbs_Up` INT NOT NULL DEFAULT 0 ,
   `Thumbs_Down` INT NOT NULL DEFAULT 0 ,
-  `Location` VARCHAR(255) NULL ,
+  `Location` VARCHAR(255) NULL DEFAULT NULL ,
   PRIMARY KEY (`TestimonialID`, `LangID`) ,
   INDEX `fk_Testimonials_Languages1_idx` (`LangID` ASC) ,
   CONSTRAINT `fk_Testimonials_Languages1`
     FOREIGN KEY (`LangID` )
     REFERENCES `willifor_redlight`.`Languages` (`LangID` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `willifor_redlight`.`Region_List`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `willifor_redlight`.`Region_List` ;
+
+CREATE  TABLE IF NOT EXISTS `willifor_redlight`.`Region_List` (
+  `RegionID` INT NOT NULL AUTO_INCREMENT ,
+  `WorkingName` VARCHAR(255) NULL ,
+  `Gender` ENUM('MALE', 'FEMALE', 'BOTH') NOT NULL DEFAULT 'BOTH' ,
+  `Age` ENUM('ADULT', 'CHILD','BOTH') NOT NULL DEFAULT 'BOTH' ,
+  PRIMARY KEY (`RegionID`) ,
+  UNIQUE INDEX `RegionID_UNIQUE` (`RegionID` ASC) )
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `willifor_redlight`.`Category_List`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `willifor_redlight`.`Category_List` ;
+
+CREATE  TABLE IF NOT EXISTS `willifor_redlight`.`Category_List` (
+  `CategoryID` INT NOT NULL ,
+  `WorkingName` VARCHAR(255) NULL ,
+  PRIMARY KEY (`CategoryID`) ,
+  UNIQUE INDEX `CategoryID_UNIQUE` (`CategoryID` ASC) )
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `willifor_redlight`.`Region_Translations`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `willifor_redlight`.`Region_Translations` ;
+
+CREATE  TABLE IF NOT EXISTS `willifor_redlight`.`Region_Translations` (
+  `RegionID` INT NOT NULL ,
+  `LangID` INT NOT NULL ,
+  `Name` VARCHAR(255) NULL ,
+  `Desc` VARCHAR(255) NULL ,
+  PRIMARY KEY (`RegionID`, `LangID`) ,
+  UNIQUE INDEX `RegionID_UNIQUE` (`RegionID` ASC) ,
+  INDEX `LangID_idx` (`LangID` ASC) ,
+  INDEX `RegionID_idx` (`RegionID` ASC) ,
+  CONSTRAINT `LangID`
+    FOREIGN KEY (`LangID` )
+    REFERENCES `willifor_redlight`.`Languages` (`LangID` )
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+  CONSTRAINT `RegionID`
+    FOREIGN KEY (`RegionID` )
+    REFERENCES `willifor_redlight`.`Region_List` (`RegionID` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `willifor_redlight`.`Category_Translations`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `willifor_redlight`.`Category_Translations` ;
+
+CREATE  TABLE IF NOT EXISTS `willifor_redlight`.`Category_Translations` (
+  `CategoryID` INT NOT NULL ,
+  `LangID` INT NOT NULL ,
+  `Name` VARCHAR(255) NULL ,
+  `ShortDesc` VARCHAR(255) NULL ,
+  PRIMARY KEY (`CategoryID`, `LangID`) ,
+  UNIQUE INDEX `CategoryID_UNIQUE` (`CategoryID` ASC) ,
+  INDEX `LangID_idx` (`LangID` ASC) ,
+  INDEX `CategoryID_idx` (`CategoryID` ASC) ,
+  CONSTRAINT `LangID`
+    FOREIGN KEY (`LangID` )
+    REFERENCES `willifor_redlight`.`Languages` (`LangID` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `CategoryID`
+    FOREIGN KEY (`CategoryID` )
+    REFERENCES `willifor_redlight`.`Category_List` (`CategoryID` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `willifor_redlight`.`Tip_List`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `willifor_redlight`.`Tip_List` ;
+
+CREATE  TABLE IF NOT EXISTS `willifor_redlight`.`Tip_List` (
+  `TipID` INT NOT NULL ,
+  PRIMARY KEY (`TipID`) )
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `willifor_redlight`.`Tip_Translations`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `willifor_redlight`.`Tip_Translations` ;
+
+CREATE  TABLE IF NOT EXISTS `willifor_redlight`.`Tip_Translations` (
+  `TipID` INT NOT NULL ,
+  `LangID` INT NOT NULL ,
+  `Title` VARCHAR(255) NULL ,
+  `ShortDesc` TEXT NULL ,
+  `LongDesc` TEXT NULL ,
+  PRIMARY KEY (`TipID`, `LangID`) ,
+  INDEX `TipID_idx` (`TipID` ASC) ,
+  INDEX `LangID_idx` (`LangID` ASC) ,
+  CONSTRAINT `TipID`
+    FOREIGN KEY (`TipID` )
+    REFERENCES `willifor_redlight`.`Tip_List` (`TipID` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `LangID`
+    FOREIGN KEY (`LangID` )
+    REFERENCES `willifor_redlight`.`Languages` (`LangID` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `willifor_redlight`.`Hierarchy`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `willifor_redlight`.`Hierarchy` ;
+
+CREATE  TABLE IF NOT EXISTS `willifor_redlight`.`Hierarchy` (
+  `RegionID` INT NOT NULL ,
+  `CategoryID` INT NOT NULL ,
+  `SubcategoryID` INT NOT NULL DEFAULT -1 ,
+  `TipID` INT NOT NULL ,
+  PRIMARY KEY (`RegionID`, `CategoryID`, `SubcategoryID`, `TipID`) ,
+  INDEX `RegionID_idx` (`RegionID` ASC) ,
+  INDEX `CategoryID_idx` (`CategoryID` ASC) ,
+  INDEX `SubCategoryID_idx` (`SubcategoryID` ASC) ,
+  INDEX `TipID_idx` (`TipID` ASC) ,
+  CONSTRAINT `RegionID`
+    FOREIGN KEY (`RegionID` )
+    REFERENCES `willifor_redlight`.`Region_List` (`RegionID` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `CategoryID`
+    FOREIGN KEY (`CategoryID` )
+    REFERENCES `willifor_redlight`.`Category_List` (`CategoryID` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `SubCategoryID`
+    FOREIGN KEY (`SubcategoryID` )
+    REFERENCES `willifor_redlight`.`Category_List` (`CategoryID` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `TipID`
+    FOREIGN KEY (`TipID` )
+    REFERENCES `willifor_redlight`.`Tip_List` (`TipID` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -524,13 +559,17 @@ DROP procedure IF EXISTS `willifor_redlight`.`getTestimonialsByDate`;
 
 DELIMITER $$
 USE `willifor_redlight`$$
-CREATE PROCEDURE `willifor_redlight`.`getTestimonialsByDate` (IN langCode VARCHAR(5))
+CREATE PROCEDURE `willifor_redlight`.`getTestimonialsByDate` (IN langCode VARCHAR(5), IN lowerLimit INT, IN upperLimit INT)
 BEGIN	
    DECLARE language_id INT;
-   SET language_id = getLangID(langCode);
+   SET @language_id = getLangID(langCode);
+   SET @lower_limit = lowerLimit;
+   SET @upper_limit = upperLimit;
    
-   SELECT T.TestimonialID AS ID, T.User_Name AS Name, T.Testimonial AS Testimonial, T.Date_Time AS 'Timestamp', T.Tip_Number AS TipNo, T.Thumbs_Up AS ThumbsUp, T.Thumbs_Down AS ThumbsDown, Location As Location
-   FROM Testimonials T WHERE T.LangID = language_id ORDER BY T.Date_Time DESC;
+   PREPARE STMT FROM 'SELECT T.TestimonialID AS ID, T.User_Name AS Name, T.Testimonial AS Testimonial, T.Date_Time AS Timestamp, T.Tip_Number AS TipNo, T.Thumbs_Up AS ThumbsUp, T.Thumbs_Down AS ThumbsDown, Location As Location
+   FROM Testimonials T WHERE T.LangID = ? ORDER BY T.Date_Time DESC LIMIT ?, ?';
+   EXECUTE STMT USING @language_id, @lower_limit, @upper_limit;
+
 END$$
 
 DELIMITER ;
@@ -544,13 +583,16 @@ DROP procedure IF EXISTS `willifor_redlight`.`getTestimonialsByRating`;
 
 DELIMITER $$
 USE `willifor_redlight`$$
-CREATE PROCEDURE `willifor_redlight`.`getTestimonialsByRating` (IN langCode VARCHAR(5))
+CREATE PROCEDURE `willifor_redlight`.`getTestimonialsByRating` (IN langCode VARCHAR(5), IN lowerLimit INT, IN upperLimit INT)
 BEGIN	
    DECLARE language_id INT;
-   SET language_id = getLangID(langCode);
-   
-   SELECT T.TestimonialID AS ID, T.User_Name AS Name, T.Testimonial AS Testimonial, T.Date_Time AS 'Timestamp', T.Tip_Number AS TipNo, T.Thumbs_Up AS ThumbsUp, T.Thumbs_Down AS ThumbsDown, Location As Location
-   FROM Testimonials T WHERE T.LangID = language_id ORDER BY T.Thumbs_Up-T.Thumbs_Down DESC;
+   SET @language_id = getLangID(langCode);
+   SET @lower_limit = lowerLimit;
+   SET @upper_limit = upperLimit;
+
+   PREPARE STMT FROM 'SELECT T.TestimonialID AS ID, T.User_Name AS Name, T.Testimonial AS Testimonial, T.Date_Time AS Timestamp, T.Tip_Number AS TipNo, T.Thumbs_Up AS ThumbsUp, T.Thumbs_Down AS ThumbsDown, Location As Location
+   FROM Testimonials T WHERE T.LangID = ? ORDER BY T.Thumbs_Up-T.Thumbs_Down DESC LIMIT ?, ?';
+   EXECUTE STMT USING @language_id, @lower_limit, @upper_limit;
 END$$
 
 DELIMITER ;
@@ -584,16 +626,17 @@ DROP procedure IF EXISTS `willifor_redlight`.`getNTestimonialsByTip`;
 
 DELIMITER $$
 USE `willifor_redlight`$$
-CREATE PROCEDURE `willifor_redlight`.`getNTestimonialsByTip` (IN langCode VARCHAR(5), IN tipNumber INT, IN rowLimit INT)
+CREATE PROCEDURE `willifor_redlight`.`getNTestimonialsByTip` (IN langCode VARCHAR(5), IN tipNumber INT, IN lowerLimit INT, IN upperLimit INT)
 BEGIN	
    DECLARE language_id INT;
    SET @language_id = getLangID(langCode);
    SET @tip_number = tipNumber;
-   SET @row_limit = rowLimit;
+   SET @lower_limit = lowerLimit;
+   SET @upper_limit = upperLimit;
 
    PREPARE STMT FROM 'SELECT T.TestimonialID AS ID, T.User_Name AS Name, T.Testimonial AS Testimonial, T.Date_Time AS Timestamp, T.Tip_Number AS TipNo, T.Thumbs_Up AS ThumbsUp, T.Thumbs_Down AS ThumbsDown, Location As Location
-   FROM Testimonials T WHERE T.LangID = ? AND T.Tip_Number = ? ORDER BY T.Thumbs_Up-T.Thumbs_Down DESC LIMIT ?';
-   EXECUTE STMT USING @language_id, @tip_number, @row_limit;
+   FROM Testimonials T WHERE T.LangID = ? AND T.Tip_Number = ? ORDER BY T.Thumbs_Up-T.Thumbs_Down DESC LIMIT ?, ?';
+   EXECUTE STMT USING @language_id, @tip_number, @lower_limit, @upper_limit;
 END$$
 
 DELIMITER ;
@@ -607,7 +650,6 @@ DROP procedure IF EXISTS `willifor_redlight`.`insertTestimonial`;
 
 DELIMITER $$
 USE `willifor_redlight`$$
-
 CREATE PROCEDURE `willifor_redlight`.`insertTestimonial` (IN langCode Varchar(5), IN userName Varchar(100), IN testimonial TEXT, IN emailAddress Varchar(100), IN tipNumber INT, IN location VARCHAR(255))
 BEGIN
 	DECLARE language_id INT;
@@ -626,7 +668,6 @@ DROP procedure IF EXISTS `willifor_redlight`.`thumbsUpTestimonial`;
 
 DELIMITER $$
 USE `willifor_redlight`$$
-
 CREATE PROCEDURE `willifor_redlight`.`thumbsUpTestimonial` (IN testimonialID INT)
 
 BEGIN
@@ -646,7 +687,6 @@ DROP procedure IF EXISTS `willifor_redlight`.`thumbsDownTestimonial`;
 
 DELIMITER $$
 USE `willifor_redlight`$$
-
 CREATE PROCEDURE `willifor_redlight`.`thumbsDownTestimonial` (IN testimonialID INT)
 
 BEGIN
