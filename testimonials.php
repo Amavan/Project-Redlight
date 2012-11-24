@@ -1,10 +1,11 @@
 <?php 
 require('global.php');
 
-$thumbsUp = $_GET['thumbsUp'];
-$thumbsDown = $_GET['thumbsDown'];
+$thumbsUp = mysql_real_escape_string($_GET['thumbsUp']);
+$thumbsDown = mysql_real_escape_string($_GET['thumbsDown']);
+$tipID = mysql_real_escape_string($_GET['tip']);
 
-$view = $_GET['view'];
+$view = mysql_real_escape_string($_GET['view']);
 $page = intval($_GET['page']);
 
 if ($thumbsUp) {
@@ -15,7 +16,7 @@ else if ($thumbsDown) {
 }
 
 if ($thumbsUp || $thumbsDown) {
-	header('Location: testimonials.php?view=' . $view . '&page=' . $page);
+	header('Location: testimonials.php?tip=' . $tipID . '&view=' . $view . '&page=' . $page);
 }
 
 $page_title = getTranslation('testimonials-title');
@@ -24,10 +25,20 @@ $sidebar_file = "testimonials-sidebar.php";
 
 require('header.php');
 
-
 ?>
 
-<h1>Testimonials <span class="testimonial-sort"><a <?php if($view == 'popular' || !$view) { echo 'class="selected"'; } ?> href="?view=popular">Most popular</a> <a <?php if($view == 'recent') { echo 'class="selected"'; } ?> href="?view=recent">Most recent</a></span></h1>
+<?php if($tipID) { ?>
+
+<?php } ?>
+
+<h1><?php if($tipID) { echoTranslation('testimonials-tip-title', array($tipID)); } else { echoTranslation('testimonials-title'); } ?>
+  <span class="testimonial-sort">
+    <?php if($tipID) { ?><a href="?"><?php echoTranslation('all-testimonials'); ?></a><?php } ?>
+    <a <?php if($view == 'popular' || !$view) { echo 'class="selected"'; } ?> href="?tip=<?php echo $tipID; ?>&view=popular"><?php echoTranslation('popular'); ?></a> 
+    <a <?php if($view == 'recent') { echo 'class="selected"'; } ?> href="?tip=<?php echo $tipID; ?>&view=recent"><?php echoTranslation('recent'); ?></a>
+  </span>
+</h1>
+
 
 <?php 
 if($_GET['view'] == 'recent') {
@@ -41,7 +52,7 @@ $result = sql("SELECT COUNT(*) as count FROM Testimonials WHERE LangID = getLang
 $row = mysql_fetch_array($result, MYSQL_ASSOC);
 
 
-// Page count stuff
+// Page count setup
 $itemsPerPage = 5;
 $maxItems = $row['count'];
 $itemStart = $page * $itemsPerPage;
@@ -61,10 +72,12 @@ $visualCurrentPage = $page + 1;
 $visualEndPage = ceil($maxItems / $itemsPerPage);
 
 if($visualEndPage==0) {
-    $pageNavHTML .= "<p class=\"pagination-text\">No testimonials found that match the current criteria.";
+    $text = getTranslation("no-testimonials");
+    $pageNavHTML .= "<p class=\"pagination-text\">$text";
 }
 else {
-  $pageNavHTML .= "<p class=\"pagination-text\">" . $visualCurrentPage . " of " . $visualEndPage;
+  $pageCount = getTranslation('page-count', array($visualCurrentPage, $visualEndPage));
+  $pageNavHTML .= "<p class=\"pagination-text\">" . $pageCount;
 }
 
 $result = sql("call $procedure('$lang_code', $itemStart, $itemsPerPage);");
@@ -77,12 +90,12 @@ while ($row = mysql_fetch_array($result, MYSQL_ASSOC)) {
 			<p><?php 			
 			$db = $row["Timestamp"];
 			$timestamp = strtotime($db);
-			echo date("F d, Y", $timestamp); ?></p>
+			echo date("M d, Y", $timestamp); ?></p>
 			<p><?php echo $row["Location"]; ?></p>
 			<?php if($row["TipNo"]) { 
-				$linkTip = $row["TipNo"];
+				$linkTip = getTranslation("tip-format", array($row["TipNo"]));
 				?>
-				<p><a href="<?php echo 'tip.php?id=' . $linkTip . '">Tip ' . $linkTip . '</a></p>'; ?>
+				<p><a href="<?php echo 'tip.php?id=' . $linkTip . '">' . $linkTip . '</a>'; ?>
 			<?php } ?>
 		</div>
 		<div class="story">
@@ -90,20 +103,23 @@ while ($row = mysql_fetch_array($result, MYSQL_ASSOC)) {
 		</div>
 		<div class="clear rating">
 			<p>
-				<a href="<?php echo '?view=' . $view . '&page=' . $page . '&thumbsUp=' . $row["ID"]; ?>" class="up">
+				<a href="<?php echo '?tip=' . $tipID . '&view=' . $view . '&page=' . $page . '&thumbsUp=' . $row["ID"]; ?>" class="up">
 					<img src="images/thumbs-up.png">
 				</a>
 				<?php echo $row["ThumbsUp"]; ?> &nbsp; &nbsp; 
-				<a href="<?php echo '?view=' . $view . '&page=' . $page . '&thumbsDown=' . $row["ID"]; ?>" class="down">
+				<a href="<?php echo '?tip=' . $tipID . '&view=' . $view . '&page=' . $page . '&thumbsDown=' . $row["ID"]; ?>" class="down">
 					<img src="images/thumbs-down.png">
 				</a>
 				<?php echo $row["ThumbsDown"]; ?></p>
 		</div>
 	</div>
+	
 <?php 
+
 }
 
 echo $pageNavHTML;
 
 require('footer.php');
+
 ?>

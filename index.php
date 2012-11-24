@@ -2,13 +2,12 @@
 
 require('global.php');
 
-$page_title = getTranslation('symptom-finder-title');
 $page_id = "symptom-finder";
 $sidebar_file = "introduction.php";
 
 require('header.php');
 
-$result = sql("SELECT * FROM  `Hierarchy`");
+$result = sql("SELECT * FROM  `Hierarchy` ORDER BY RegionID, CategoryID, SubcategoryID, TipID");
 $hierarchy = array();
 while($row = mysql_fetch_assoc($result)) {
   array_push($hierarchy, $row);
@@ -92,24 +91,24 @@ while($row = mysql_fetch_assoc($result)) {
   	  <div class="toggle-container"><span>1</span>
   	    <div class="toggle">
   	      <ul>
-  	        <li><a class="adult-btn" href="javascript:void(0)">Adult</a>
-  	        <li><a class="child-btn" href="javascript:void(0)">Child</a>
+  	        <li><a class="adult-btn" href="javascript:void(0)"><?php echoTranslation('adult-btn'); ?></a>
+  	        <li><a class="child-btn" href="javascript:void(0)"><?php echoTranslation('child-btn'); ?></a>
   	      </ul>
   	    </div>
   	  </div>
   	  <div class="toggle-container"><span>2</span>
   	    <div class="toggle">
   	      <ul>
-  	        <li><a class="male-btn" href="javascript:void(0)">Male</a>
-  	        <li><a class="female-btn" href="javascript:void(0)">Female</a>
+  	        <li><a class="male-btn" href="javascript:void(0)"><?php echoTranslation('male-btn'); ?></a>
+  	        <li><a class="female-btn" href="javascript:void(0)"><?php echoTranslation('female-btn'); ?></a>
   	      </ul>
   	    </div>
   	  </div>
   	  <div class="toggle-container"><span>3</span>
   	    <div class="toggle stacked">
   	      <ul>
-  	        <li><a class="body-btn" href="javascript:void(0)">Body Part-specific Symptoms</a>
-  	        <li><a class="list-btn" href="javascript:void(0)">General Symptoms & Signs</a>
+  	        <li><a class="body-btn" href="javascript:void(0)"><?php echoTranslation('body-btn'); ?></a>
+  	        <li><a class="list-btn" href="javascript:void(0)"><?php echoTranslation('list-btn'); ?></a>
   	      </ul>
   	    </div>
   	  </div>
@@ -120,8 +119,8 @@ while($row = mysql_fetch_assoc($result)) {
   <div class="symptom-finder-canvas start">
     
     <div class="message">
-    	<p><span class="step-num">4</span> Select a body region:</p>
-    	<p class="back back-btn"><a href="javascript:void(0)">◀</a></p>
+    	<p><span class="step-num">4</span> <?php echoTranslation('region-instructions'); ?></p>
+    	<p class="back back-btn"><a href="javascript:void(0)"><?php echoTranslation('back-btn'); ?></a></p>
     </div>
   
     <div class="body">

@@ -23,15 +23,27 @@ function setupLang() {
 
 }
 
-function echoTranslation($id) {
+function translate($id, $array) {
   global $string;
-  echo $string[$id];
+  $result = $string[$id];
+  if($array != null) {
+    $replace = array();
+    for($i = 0; $i < count($array); $i++) {
+      $replace[$i] = "<<$i>>";
+    }
+    $result = str_replace($replace, $array, $result);
+  }
+  //return "X";
+  return $result;
+}
+
+function echoTranslation($id, $array) {
+  echo translate($id, $array);
 }
 
 
-function getTranslation($id) {
-  global $string;
-  return $string[$id];
+function getTranslation($id, $array) {
+  return translate($id, $array);
 }
 
 

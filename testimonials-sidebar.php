@@ -1,5 +1,3 @@
 <h1><?php echoTranslation('add-tip-title'); ?></h1>
-
-<p>If you've benefitted from this website or the book, we'd love to hear from you.</p>
-
-<p><a href="submit-story.php">Share your story</a></p>
+<p><?php echoTranslation('submit-story-intro'); ?>
+<p><a href="submit-story.php?tip=<?php echo $tipID; ?>"><?php echoTranslation('add-tip-title'); ?></a>

@@ -1,2 +1,2 @@
-<h1>Introduction</h1>
-<p>People do not always know when it is urgent for them to see a doctor or to get a child, friend, or loved one to the doctor. They don't know whether to go to the emergency room or to make an appointment with their primary care doctor or a specialist. <a href="#">Read more</a></p>
+<h1><?php echoTranslation('home-intro'); ?></h1>
+<p><?php echoTranslation('home-intro-body'); ?> <a href="#"><?php echoTranslation('home-read-more'); ?></a></p>
