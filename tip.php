@@ -3,7 +3,6 @@
 require('global.php');
 
 $page_title = getTranslation('testimonials-title');
-$page_id = "browse";
 $sidebar_file = "tip-sidebar.php";
 
 
@@ -18,6 +17,11 @@ require('header.php');
 
 <h2>Weight loss, increased urination, blurred distance vision, and increased thirst and appetite are highly suggestive of diabetes. The early stages of diabetes often have no symptoms, and the only way to know if you have it is to have your blood sugar checked.</h2>
 
+<div class="video">
+<iframe width="300" height="169" src="http://www.youtube.com/embed/9E0xxCROnqY" frameborder="0" allowfullscreen></iframe>
+<p>Causes of weight loss, increased urination, blurred distance vision</p>
+</div>
+
 <p>Weight loss is a sign of many disorders. But when you experience it along with an increased appetite and continuous thirst, you may have a certain type of diabetes. This condition also causes frequent urination, and may cause blurring of your distance vision. Type 1 diabetes occurs when cells in the pancreas stop secreting insulin, the hormone responsible for transporting sugar in the blood to your body cells. Instead, when sugar increases in the blood, it will pass into the urine, pulling extra fluid with it. You will drink more to replenish your fluids, and continue to urinate a lot.  Changes in fluid and sugar levels often cause fluctuating blurry vision. The loss of sugar and water in your urine results in lost calories, dehydration and hence weight loss. Due to the lack of insulin, the body cannot use the sugar as a source of energy.
 
 <p>Diabetes can be diagnosed by obtaining a fasting blood sugar test, which means you do not eat for at least eight hours before the test. A fasting blood sugar level of 126 mg/dl or higher suggests the diagnosis of diabetes.
@@ -31,6 +35,11 @@ require('header.php');
 <p>If you experience increased urination, appetite, and thirst, often with weight loss, seek medical evaluation to determine if you have diabetes or if there is another cause for these symptoms.
 
 </div>
+
+
+<script type="text/javascript" src="http://w.sharethis.com/button/buttons.js"></script>
+<script type="text/javascript">stLight.options({publisher: "ur-c6467fcd-9e5e-bd6c-543a-6a5be6937e1"});</script>
+
 
 <?php
 

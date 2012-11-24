@@ -32,6 +32,12 @@ function submitForm() {
 	header("Location: testimonials.php");
 }
 
+if($_POST['tip']) {
+	$tip = $_POST['tip'];
+}
+else if ($_GET['tip']) {
+	$tip = $_GET['tip'];
+}
 ?>
 
 <div class="submit-story">
@@ -49,7 +55,7 @@ function submitForm() {
           <p><span>Name*</span><input type="text" name="name" spellcheck="false" autocomplete="off" value="<?php echo $_POST['name']; ?>">
           <p><span>Email</span><input type="email" name="email" spellcheck="false" autocomplete="off" value="<?php echo $_POST['email']; ?>">
 	      <p><span>City, State</span><input type="text" name="location" spellcheck="false" autocomplete="off" value="<?php echo $_POST['location']; ?>">
-		  <p><span>Tip</span><input type="text" name="tip" spellcheck="false" autocomplete="off" value="<?php echo $_POST['tip']; ?>">
+		  <p><span>Tip</span><input type="text" name="tip" spellcheck="false" autocomplete="off" value="<?php echo $tip; ?>">
           <p><span>Message*</span><textarea rows="5" name="message" id="message-input"><?php echo $_POST['message']; ?></textarea>
 	
           <p><button type="submit" name="submit" value="submit" id="submit-btn" >Submit</button>

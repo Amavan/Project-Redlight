@@ -254,6 +254,33 @@ h1 {
 	line-height: 1.5em;
 }
 
+.tip .social {
+	display: inline-block;
+	margin-top: 25px;
+	padding: 10px;
+	background: #fafafa;
+	border: 1px solid #eee;
+}
+
+.tip .social > span {
+	margin: 10px !important;
+	display: block;
+}
+
+.tip .video {
+	float: right;
+	padding: 10px;
+	background: #f6f6f6;
+	border: 1px solid #ddd;
+	margin: 0 0 20px 20px;
+	width: 300px;
+}
+
+.tip .video p {
+	margin: 5px 0 0;
+	color: #666;
+}
+
 .red-light-sidebar p {
   line-height: 1.5em;
   margin-bottom: 10px;
@@ -383,11 +410,14 @@ h1 {
   -moz-transition: height .5s;
   -webkit-transition: height .5s;
   background: #fff url(../images/grid.png);
-    transition: right .7s ease-in-out;
-  -moz-transition: right .7s ease-in-out;
-  -webkit-transition: right .7s ease-in-out;
   z-index: 2;
   box-shadow: inset 0 1px 8px #bbb;
+}
+
+.symptom-finder-canvas.annimate {
+  transition: right .4s ease-in-out;
+  -moz-transition: right .4s ease-in-out;
+  -webkit-transition: right .4s ease-in-out;
 }
 
 .symptom-finder-canvas.start .body {
@@ -400,20 +430,34 @@ h1 {
 }
 
 .symptom-finder-canvas .message .back {
-	display: none;
+	position: absolute;
+  left: 15px;
+	top: 15px;
+	z-index: 3;
+	opacity: 0;
+  transition: opacity .4s ease;
+  -moz-transition: opacity .4s ease;
+  -webkit-transition: opacity .4s ease;
 }
 
 .symptom-finder-canvas.shift .message .back {
-	display: block;
-	position: absolute;
-	left: 15px;
-	z-index: 3;
-	top: 15px;
+	opacity: 1;
+
+}
+
+.symptom-finder-canvas .message .back a {
+	text-decoration: none;
+	border-bottom: none;
+	cursor: default;
 }
 
 .symptom-finder-canvas.shift .message .back a {
-	text-decoration: none;
-	border-bottom: none;
+  cursor: auto;
+}
+
+.symptom-finder-canvas.shift .message .back a:hover {
+  text-shadow: 1px 2px rgba(255,255,255,0.4), 0 0 22px #333;
+  color: #000;
 }
 
 .symptom-finder-canvas .message {
@@ -500,99 +544,8 @@ h1 {
 
 /* Dots */
 
-.symptom-finder .dot {
-  position: absolute;
-}
-
-.symptom-finder .dot.belly {
-	top: 50%;
-	left: 50%;
-}
-
-.symptom-finder .dot.head {
-	top: 2%;
-	left: 50%;
-}
-
-.symptom-finder .dot.eyes {
-	top: 6%;
-	left: 38%;
-}
-
-.symptom-finder .dot.ear-nose-mouth-throat-neck {
-	top: 13%;
-	left: 50%;	
-}
-
-.symptom-finder .dot.arms-hands {
-	top: 50%;
-	left: 7%;	
-}
-
-.symptom-finder .dot.back {
-	top: 15%;
-	left: 100%;	
-}
-
-.symptom-finder .dot.skin {
-	top: 9%;
-	left: 100%;	
-}
-
-.symptom-finder .hips-buttocks-legs-ankles {
-	top: 65%;
-	left: 28%;	
-}
-
-.symptom-finder .groin {
-	top: 62%;
-	left: 50%;	
-}
-
-.symptom-finder .female .groin {
-	display: none;
-}
-
-.symptom-finder .menstruation-menopause-pms {
-	top: 62%;
-	left: 50%;	
-}
-
-.symptom-finder .male .menstruation-menopause-pms {
-	display: none;
-}
-
-.symptom-finder .urine {
-	top: 66%;
-	left: 50%;	
-}
-
-.symptom-finder .bowel-movement {
-	top: 70%;
-	left: 50%;	
-}
-
-.symptom-finder .genitalia {
-	top: 58%;
-	left: 50%;	
-}
-
-.symptom-finder .chest-area {
-	top: 32%;
-	left: 50%;	
-}
-
-.symptom-finder .breast {
-	top: 28%;
-	left: 50%;	
-}
-
-
-.symptom-finder .dot a {
-  position: relative;
+.symptom-finder a.dot {
   display: block;
-  height: 100%;
-  width: 100%;
   background: red;
   height: 8px;
   width: 8px;
@@ -601,7 +554,7 @@ h1 {
   box-shadow: 0 0 0 2px rgba(255,255,255,0.5);
 }
 
-.symptom-finder .dot a:hover {
+.symptom-finder a.dot:hover {
   box-shadow: 0 0 0 3px #fff, 0 0 0 5px red;
   z-index: 1;
 }
@@ -610,7 +563,7 @@ h1 {
   display: none;
 }
 
-.symptom-finder .dot a:hover .label {
+.symptom-finder a.dot:hover .label {
   display: block;
   position: absolute;
   top: -4px;
@@ -658,20 +611,13 @@ h1 {
   font-size: 19px;
 }
 
-.symptom-finder-results ul {
-	
-}
-
-.symptom-finder-results li {
-}
-
 .symptom-finder-results li:nth-child(odd) {
 	background: #a4a4a4;
 }
 
 .symptom-finder-results li a {
 	display: block;
-    padding: 10px 20px;	
+	padding: 10px 20px;	
 	color: #fff;
 	font-size: 14px;
 	text-decoration: none;
@@ -683,6 +629,7 @@ h1 {
 
 .symptom-finder-results li li {
 	padding-left: 20px;
+	background: inherit !important;
 }
 
 .symptom-finder-results li li a {
@@ -696,6 +643,11 @@ h1 {
 
 .symptom-finder-results li ul {
 	padding-bottom: 5px;
+	display: none;
+}
+
+.symptom-finder-results li.selected > ul {
+  display: block !important;
 }
 
 .visible {
@@ -828,4 +780,27 @@ h1 {
 .submit-story .error {
 	color: red;
 	margin: 0  0 25px 0;
+}
+
+a.pagination-next,
+a.pagination-prev {
+	display: inline-block;
+	padding: 5px;
+	text-decoration: none;
+	color: #fff;
+	background: #aaa;
+}
+
+a.pagination-next:hover,
+a.pagination-prev:hover {
+	background: #666;
+}
+
+.pagination-prev {
+	margin-right: 5px;
+}
+
+.pagination-text {
+	color: #999;
+	margin: 10px 0 0 0;
 }
