@@ -3,7 +3,6 @@ goog.require('goog.events');
 goog.require('goog.events.EventType');
 goog.require('goog.dom.classes');
 goog.require('goog.net.cookies');
-
 goog.provide('redlight.SymptomFinder');
 
 
@@ -34,6 +33,7 @@ redlight.SymptomFinder = function(regions, categories, hierarchies, category_lis
   this._listBtn;
   
   // Categories
+  this._currentRegion;
   this._currentCategory;
   this._currentSubcategory;
   
@@ -71,60 +71,91 @@ redlight.SymptomFinder.prototype.init = function() {
   goog.events.listen(this._listBtn, goog.events.EventType.CLICK, function() { this.setBodyBtnState(false); }, null, this);
   goog.events.listen(this._backBtn, goog.events.EventType.CLICK, function() { this.backClick(); }, null, this);
 
+  this.getCookies();  
   this.setAdultBtnState();
   this.setMaleBtnState();
   this.setBodyBtnState();
   this.setRegion();
   this.setCategory();
+  
+  goog.dom.classes.add(this._syptomFinder, 'visible');
+}
+
+redlight.SymptomFinder.prototype.getCookies = function(boolean) {
+  this.getCookie('adultBtnSelected');
+  this.getCookie('maleBtnSelected');
+  this.getCookie('bodyBtnSelected');
+  this.getCookie('currentRegion');
+  this.getCookie('currentCategory');
+  this.getCookie('currentSubcategory');
+}
+
+redlight.SymptomFinder.prototype.getCookie = function(name) {
+    if(goog.net.cookies.containsKey(name)) {
+    this['_' + name] = Number(goog.net.cookies.get(name));
+  }
 }
 
 redlight.SymptomFinder.prototype.setAdultBtnState = function(boolean) {
-  if(boolean == null && goog.net.cookies.containsKey('adultBtnSelected')) {
-    boolean = Number(goog.net.cookies.get('adultBtnSelected'));
-  }
   if(boolean != null) {
-    goog.dom.classes.enable(this._adultBtn, 'selected', boolean);
-    goog.dom.classes.enable(this._childBtn, 'selected', !boolean);
     this._adultBtnSelected = boolean;
-    goog.net.cookies.set('adultBtnSelected',Number(boolean));
+  }
+  if(this._adultBtnSelected != null) {
+    goog.dom.classes.enable(this._adultBtn, 'selected', this._adultBtnSelected);
+    goog.dom.classes.enable(this._childBtn, 'selected', !this._adultBtnSelected);
+    goog.net.cookies.set('adultBtnSelected',Number(this._adultBtnSelected));
     this.updateState();
   }
 }
 
 redlight.SymptomFinder.prototype.setMaleBtnState = function(boolean) {
-  if(boolean == null && goog.net.cookies.containsKey('maleBtnSelected')) {
-    boolean = Number(goog.net.cookies.get('maleBtnSelected'));
-  }
   if(boolean != null) {
-    goog.dom.classes.enable(this._maleBtn, 'selected', boolean);
-    goog.dom.classes.enable(this._femaleBtn, 'selected', !boolean);
     this._maleBtnSelected = boolean;
-    goog.net.cookies.set('maleBtnSelected', Number(boolean));
+  }
+  if(this._maleBtnSelected != null) {
+    goog.dom.classes.enable(this._maleBtn, 'selected', this._maleBtnSelected);
+    goog.dom.classes.enable(this._femaleBtn, 'selected', !this._maleBtnSelected);
+    goog.net.cookies.set('maleBtnSelected', Number(this._maleBtnSelected));
     this.updateState();
   }
 }
 
 redlight.SymptomFinder.prototype.setBodyBtnState = function(boolean) {
-  if(boolean == null && goog.net.cookies.containsKey('bodyBtnSelected')) {
-     boolean = Number(goog.net.cookies.get('bodyBtnSelected'));
-  }
   if(boolean != null) {
-    goog.dom.classes.enable(this._bodyBtn, 'selected', boolean);
-    goog.dom.classes.enable(this._listBtn, 'selected', !boolean);
     this._bodyBtnSelected = boolean;
-    goog.net.cookies.set('bodyBtnSelected',Number(boolean));
+    if(boolean == true) {
+      this._currentRegion = null;
+      goog.net.cookies.remove('currentRegion');
+    }
+  }
+  if(this._bodyBtnSelected != null) {
+    goog.dom.classes.enable(this._bodyBtn, 'selected', this._bodyBtnSelected);
+    goog.dom.classes.enable(this._listBtn, 'selected', !this._bodyBtnSelected);
+    goog.net.cookies.set('bodyBtnSelected',Number(this._bodyBtnSelected));
+    if(!this._bodyBtnSelected) {
+      this._currentRegion = -1;
+      goog.net.cookies.set('currentRegion', -1);
+    }
     this.updateState();
   }
 }
 
 redlight.SymptomFinder.prototype.updateState = function() {
   if(this._adultBtnSelected != null && this._maleBtnSelected != null && this._bodyBtnSelected != null) {
-    goog.dom.classes.enable(this._canvas, 'start', false);
-    goog.dom.classes.enable(this._body, 'male', this._maleBtnSelected);
-    goog.dom.classes.enable(this._body, 'female', !this._maleBtnSelected);
-    goog.dom.classes.enable(this._body, 'adult', this._adultBtnSelected);
-    goog.dom.classes.enable(this._body, 'child', !this._adultBtnSelected);
-    this.setBodyDots();
+    // Body canvas
+    if(this._bodyBtnSelected) {
+      goog.dom.classes.enable(this._canvas, 'hidden', false);
+      goog.dom.classes.enable(this._canvas, 'start', false);
+      goog.dom.classes.enable(this._body, 'male', this._maleBtnSelected);
+      goog.dom.classes.enable(this._body, 'female', !this._maleBtnSelected);
+      goog.dom.classes.enable(this._body, 'adult', this._adultBtnSelected);
+      goog.dom.classes.enable(this._body, 'child', !this._adultBtnSelected);
+      this.setBodyDots();
+    }  
+    // Symptom list
+    else {
+      this.setRegion();
+    }
   }
   else {
     goog.dom.classes.enable(this._canvas, 'start', true);
@@ -137,6 +168,7 @@ redlight.SymptomFinder.prototype.backClick = function() {
   goog.net.cookies.remove('currentRegion');
   goog.net.cookies.remove('currentCategory');
   goog.net.cookies.remove('currentSubcategory');
+  this._currentRegion = null;
   this._currentCategory = -1;
   this._currentSubcategory = -1;
 }
@@ -187,16 +219,21 @@ redlight.SymptomFinder.prototype.setBodyDots = function() {
 }
 
 redlight.SymptomFinder.prototype.setRegion = function(event) {
-  if(event) {
-    var regionID = event.currentTarget.getAttribute('red-light-region');
+  if(this._adultBtnSelected == null || this._maleBtnSelected ==null) {
+    return;
   }
-  else if(goog.net.cookies.containsKey('currentRegion')) {
-    var regionID = Number(goog.net.cookies.get('currentRegion'));
+  if(event != null) {
+    var regionID = event.currentTarget.getAttribute('red-light-region');
+    this._currentRegion = regionID;
+    goog.net.cookies.set('currentRegion', regionID);
+  }
+  else if(this._currentRegion != null) {
+    regionID = this._currentRegion;
   }
   else {
     return;
   }
-  goog.net.cookies.set('currentRegion', regionID);
+
   var regionLabel = this._regions[regionID];
   this._resultsHeadingEl.innerHTML = regionLabel;
   var html = "<ul>";
@@ -233,7 +270,11 @@ redlight.SymptomFinder.prototype.setRegion = function(event) {
             html += '<li><a red-light-results-sub-category="' + item.SubcategoryID + '" href="javascript:void(0);">' + subcategoryLabel + '</a><ul>';
           }
         }
-        html += '<li><a href="tip.php?id=' + item.TipID + '"> Tip ' + item.TipID + '</a>';
+        var label = "Tip " + item.TipID;
+        if(this._hierarchies[item.HierarchyID]) {
+          label = this._hierarchies[item.HierarchyID];
+        }
+        html += '<li><a class="tip-link" href="tip.php?id=' + item.TipID + '">' + label + '</a>';
         lastCategory = item.CategoryID;
         lastSubcategory = item.SubcategoryID;
       }
@@ -248,8 +289,6 @@ redlight.SymptomFinder.prototype.setRegion = function(event) {
 
   html += "</ul>";
   
-  console.log(html);
-  
   this._resultsListEl.innerHTML = html;
 
   var resultsEls = goog.dom.getElementsByTagNameAndClass('a', null, this._resultsListEl);
@@ -257,11 +296,16 @@ redlight.SymptomFinder.prototype.setRegion = function(event) {
     goog.events.listen(resultsEls[i], goog.events.EventType.CLICK, this.setCategory, null, this);
   }
 
-  if(event) {
-    goog.dom.classes.enable(this._canvas, 'annimate', true);
+  if(regionID != -1 ) {
+    if(event) {
+      goog.dom.classes.enable(this._canvas, 'annimate', true);
+    }
+    goog.dom.classes.enable(this._canvas, 'shift', true);
   }
-  goog.dom.classes.enable(this._canvas, 'shift', true);
-  goog.dom.classes.enable(this._results, 'hidden', false);
+  else {
+    this._resultsHeadingEl.innerHTML = this._listBtn.innerHTML;
+    goog.dom.classes.enable(this._canvas, 'hidden', true);
+  }
 }
 
 redlight.SymptomFinder.prototype.resultClick = function() {
@@ -301,9 +345,7 @@ redlight.SymptomFinder.prototype.setCategory = function(event) {
       }
     }
   }
-  else if(goog.net.cookies.containsKey('currentCategory') && goog.net.cookies.containsKey('currentSubcategory')) {
-    this._currentCategory = goog.net.cookies.get('currentCategory');
-    this._currentSubcategory = goog.net.cookies.get('currentSubcategory');
+  else if(this._currentCategory) {
     var resultLinkEls = goog.dom.getElementsByTagNameAndClass('a', null, this._resultsListEl);
     for(var i = 0; i < resultLinkEls.length; i++) {
       var resultLinkEl = resultLinkEls[i];

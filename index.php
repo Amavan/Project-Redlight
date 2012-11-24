@@ -79,66 +79,61 @@ while($row = mysql_fetch_assoc($result)) {
 
 <div class="symptom-finder">
 
-<div class="toggles">
-  <div class="toggles-container">
-	  <h1><?php echoTranslation('symptom-finder-title'); ?></h1>
-  
-	  <div class="toggle-container"><span>1</span>
-	    <div class="toggle">
-	      <ul>
-	        <li><a class="adult-btn" href="javascript:void(0)">Adult</a>
-	        <li><a class="child-btn" href="javascript:void(0)">Child</a>
-	      </ul>
-	    </div>
-	  </div>
-	  <div class="toggle-container"><span>2</span>
-	    <div class="toggle">
-	      <ul>
-	        <li><a class="male-btn" href="javascript:void(0)">Male</a>
-	        <li><a class="female-btn" href="javascript:void(0)">Female</a>
-	      </ul>
-	    </div>
-	  </div>
-	  <div class="toggle-container"><span>3</span>
-	    <div class="toggle stacked">
-	      <ul>
-	        <li><a class="body-btn" href="javascript:void(0)">Body Part-specific Symptoms</a>
-	        <li><a class="list-btn" href="javascript:void(0)">General Symptoms & Signs</a>
-	      </ul>
-	    </div>
-	  </div>
-  </div>
-</div>
-
-
-<div class="symptom-finder-canvas start">
-  
-  <div class="message">
-	<p><span class="step-num">4</span> Select a body region:</p>
-	<p class="back back-btn"><a href="javascript:void(0)">◀</a></p>
+  <div class="symptom-finder-results">
+    <h1 class="results-heading"></h1>
+    <div class="results-list">  
+    </div>
   </div>
 
-  <div class="body">
-    <img class="male adult" src="images/male.png">
-    <img class="female adult" src="images/female.png">
-    <img class="male child" src="images/male.png">
-    <img class="female child" src="images/female.png">
-	<div class="dot-container">
-	
-
-	</div>
+  <div class="toggles">
+    <div class="toggles-container">
+  	  <h1><?php echoTranslation('symptom-finder-title'); ?></h1>
+    
+  	  <div class="toggle-container"><span>1</span>
+  	    <div class="toggle">
+  	      <ul>
+  	        <li><a class="adult-btn" href="javascript:void(0)">Adult</a>
+  	        <li><a class="child-btn" href="javascript:void(0)">Child</a>
+  	      </ul>
+  	    </div>
+  	  </div>
+  	  <div class="toggle-container"><span>2</span>
+  	    <div class="toggle">
+  	      <ul>
+  	        <li><a class="male-btn" href="javascript:void(0)">Male</a>
+  	        <li><a class="female-btn" href="javascript:void(0)">Female</a>
+  	      </ul>
+  	    </div>
+  	  </div>
+  	  <div class="toggle-container"><span>3</span>
+  	    <div class="toggle stacked">
+  	      <ul>
+  	        <li><a class="body-btn" href="javascript:void(0)">Body Part-specific Symptoms</a>
+  	        <li><a class="list-btn" href="javascript:void(0)">General Symptoms & Signs</a>
+  	      </ul>
+  	    </div>
+  	  </div>
+    </div>
   </div>
 
-</div>
 
-<div class="symptom-finder-results hidden">
-  <h1 class="results-heading">Title</h1>
-  <div class="results-list">
+  <div class="symptom-finder-canvas start">
+    
+    <div class="message">
+    	<p><span class="step-num">4</span> Select a body region:</p>
+    	<p class="back back-btn"><a href="javascript:void(0)">◀</a></p>
+    </div>
   
+    <div class="body">
+      <img class="male adult" src="images/male.png">
+      <img class="female adult" src="images/female.png">
+      <img class="male child" src="images/male.png">
+      <img class="female child" src="images/female.png">
+    	<div class="dot-container">
+    	</div>
+    </div>
   
   </div>
-
-</div>
 
 </div>
 
