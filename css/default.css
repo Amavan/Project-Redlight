@@ -93,9 +93,6 @@ strong {
   font-size: 16px;
 }
 
-.red-light-nav div.right {
-  float: right;
-}
 
 .red-light-nav > div:hover a span {
   border-bottom: 1px solid #aaa;
@@ -125,7 +122,8 @@ strong {
 
 /* Logo */
 
-.red-light-nav .logo {
+.red-light-nav a.logo {
+  display: block;
   font-size: 20px;
   font-family: 'Open Sans', sans-serif;
   text-transform: uppercase;
@@ -142,9 +140,10 @@ strong {
   width: 145px;
   top: 20px;
   left: 50px;
+  text-decoration: none;
 }
 
-.red-light-nav .logo span {
+.red-light-nav a.logo span {
   display: block;
 }
 
@@ -823,4 +822,51 @@ a.pagination-prev:hover {
 .pagination-text {
 	color: #999;
 	margin: 10px 0 0 0;
+}
+
+@media only screen and (max-width: 740px) {
+  .red-light-nav a.logo {
+    position: absolute;
+    margin: 0;
+    font-size: 14px;
+    width: 95px;
+    top: 15px;
+    left: 15px;
+  }
+  
+  .red-light-nav {
+    padding: 10px 15px 15px 145px;
+  }
+  
+  .red-light-nav > div a {
+    padding: 10px 5px;
+    font-size: 15px;
+  }
+  
+  .red-light-nav > div {
+    display: block;
+  }
+  
+  .red-light-sidebar {
+    width: auto;
+    float: none;
+    margin: 20px 0;
+  }
+  
+  .red-light-page-inner {
+    margin: 0;
+  }
+  
+  .red-light-page {
+    margin: 15px;
+  }
+  
+  .red-light-footer {
+    padding: 15px;
+  }
+  
+  .red-light-footer {
+    margin-top: 30px;
+  }
+
 }

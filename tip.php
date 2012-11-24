@@ -21,9 +21,9 @@ if($tipID) {
   $result = sql("SELECT * FROM  `Tip_Translations` WHERE TipID = $tipID AND LangID = getLangID('$lang_code');");
   $row1 = mysql_fetch_assoc($result);
   if($row1) {
-    $title = $row1['Title'];
-    $shortDesc = $row1['ShortDesc'];
-    $longDesc = $row1['LongDesc'];
+    $title = utf8_encode($row1['Title']);
+    $shortDesc = utf8_encode($row1['ShortDesc']);
+    $longDesc = utf8_encode($row1['LongDesc']);
   }
   
   if($row == null || $row1 == null) {
