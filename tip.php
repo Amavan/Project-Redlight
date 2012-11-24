@@ -3,7 +3,6 @@
 require('global.php');
 
 $page_title = getTranslation('testimonials-title');
-$sidebar_file = "tip-sidebar.php";
 
 $tipID = mysql_real_escape_string($_GET['id']);
 
@@ -26,13 +25,19 @@ if($tipID) {
     $shortDesc = $row1['ShortDesc'];
     $longDesc = $row1['LongDesc'];
   }
+  
+  if($row == null || $row1 == null) {
+    $tipID = null;
+  }
 
 }
 
+$sidebar_file = "tip-sidebar.php";
+
 require('header.php');
 
+if($tipID) {
 
-if($row && $row1) {
 
 ?>
 
